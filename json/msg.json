@@ -1,0 +1,230 @@
+[
+  {
+    "msgName": "adminMenu",
+    "msgType": "admin",
+    "msg": {
+      "type": "template",
+      "altText": "進入管理員選單",
+      "template": {
+        "type": "carousel",
+        "columns": [
+          {
+            "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/+sedum.png",
+            "title": "管理員選單1",
+            "text": "好友管理",
+            "actions": [
+              {
+                "type": "uri",
+                "label": "加入好友",
+                "uri": "line://ti/p/@bmr3446l"
+              },
+              {
+                "type": "postback",
+                "label": "發送加入好友訊息",
+                "data": "sendFollow"
+              },
+              {
+                "type": "postback",
+                "label": "開發中",
+                "data": "開發中"
+              }
+            ]
+          },
+          {
+            "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/cat.jpg",
+            "title": "管理員選單2",
+            "text": "功能測試",
+            "actions": [
+              {
+                "type": "uri",
+                "label": "拍照",
+                "uri": "line://nv/camera/"
+              },
+              {
+                "type": "postback",
+                "label": "發送圖片",
+                "data": "sendImageTest"
+              },
+              {
+                "type": "uri",
+                "label": "連結",
+                "uri": "https://www.google.com.tw/"
+              }
+            ]
+          },
+          {
+            "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/difficult.png",
+            "title": "管理員選單3",
+            "text": "RichMenu管理",
+            "actions": [
+              {
+                "type": "postback",
+                "label": "建立RichMenu",
+                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmCreate\",\"rm\":\"rmCenter\"}"
+              },
+              {
+                "type": "postback",
+                "label": "查看RichMenu清單",
+                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmGetList\"}"
+              },
+              {
+                "type": "datetimepicker",
+                "label": "開發中",
+                "data": "datestring",
+                "mode": "date"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "msgName": "adminMenuReject",
+    "msgType": "admin",
+    "msg": {
+      "type": "text",
+      "text": "非管理員無法進入管理員選單"
+    }
+  },
+  {
+    "msgName": "rmDesc",
+    "msgType": "rm",
+    "msg": {
+      "type": "text",
+      "text": "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409"
+    }
+  },
+  {
+    "msgName": "rmAttendance",
+    "msgType": "rm",
+    "msg": {
+      "type": "text",
+      "text": "出勤管理"
+    }
+  },
+  {
+    "msgName": "rmConstructing",
+    "msgType": "rm",
+    "msg": {
+      "type": "text",
+      "text": "此功能尚在建置中"
+    }
+  },
+  {
+    "msgName": "authApply",
+    "msgType": "auth",
+    "msg": {
+      "type": "text",
+      "text": "已收到您輸入的驗證碼!\n請將表單送出，\n並等待權限審核流程完成，\n謝謝!"
+    }
+  },
+  {
+    "msgName": "gmAdminOnly",
+    "msgType": "gm",
+    "msg": {
+      "type": "text",
+      "text": "此功能僅限群組管理員操作"
+    }
+  },
+  {
+    "msgName": "gm",
+    "msgType": "gm",
+    "msg": {
+      "type": "template",
+      "altText": "群組管理選單",
+      "template": {
+        "type": "buttons",
+        "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/msgCenter.png",
+        "title": "群組管理選單",
+        "text": "僅限群組管理員使用",
+        "actions": [
+          {
+            "type": "postback",
+            "label": "代號設定",
+            "data": "{\"responseType\":\"msg\",\"msgName\":\"gmCodeSetting\"}"
+          },
+          {
+            "type": "postback",
+            "label": "人員清單",
+            "data": "{\"responseType\":\"gm\",\"gmName\":\"gmMemberList\"}"
+          },
+          {
+            "type": "postback",
+            "label": "人員比對",
+            "data": "{\"responseType\":\"gm\",\"gmName\":\"gmMemberCheck\"}"
+          },
+          {
+            "type": "postback",
+            "label": "敬鵬LineBot功能解除",
+            "data": "{\"responseType\":\"msg\",\"msgName\":\"gmBreak\"}"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "msgName": "gmCodeSetting",
+    "msgType": "gm",
+    "msg": {
+      "type": "text",
+      "text": "請輸入於EB申請取得的群組代號\n(ex:GP001)"
+    }
+  },
+  {
+    "msgName": "gmMemberCheckTrue",
+    "msgType": "gm",
+    "msg": {
+      "type": "text",
+      "text": "群組中成員與EB系統中維護之成員比對吻合"
+    }
+  },
+  {
+    "msgName": "gmMemberCheckFalse",
+    "msgType": "gm",
+    "msg": {
+      "type": "text",
+      "text": "群組中成員與EB系統中維護之成員比對不吻合"
+    }
+  },
+  {
+    "msgName": "gmBreak",
+    "msgType": "gm",
+    "msg": {
+      "type": "template",
+      "altText": "LineBot功能解除確認",
+      "template": {
+        "type": "confirm",
+        "text": "注意：敬鵬LineBot將離開群組，\n是否確定?",
+        "actions": [
+          {
+            "type": "postback",
+            "label": "確定",
+            "data": "{\"responseType\":\"gm\",\"gmName\":\"gmBreakConfirm\"}"
+          },
+          {
+            "type": "postback",
+            "label": "取消",
+            "data": "{\"responseType\":\"gm\",\"gmName\":\"gmBreakCancel\"}"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "msgName": "imgMsgReply",
+    "msgType": "img",
+    "msg": {
+      "type": "text",
+      "text": "您傳送了一張圖片"
+    }
+  },
+  {
+    "msgName": "imgUploadSuccess",
+    "msgType": "img",
+    "msg": {
+      "type": "text",
+      "text": "圖片上傳成功!"
+    }
+  }
+]

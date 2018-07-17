@@ -1,0 +1,228 @@
+[
+  {
+    "rmName": "rmCenter",
+    "rm": {
+      "name": "rmCenter",
+      "size": {
+        "width": 2500,
+        "height": 1686
+      },
+      "selected": false,
+      "chatBarText": "功能選單",
+      "areas": [
+        {
+          "bounds": {
+            "x": 77,
+            "y": 855,
+            "width": 500,
+            "height": 500
+          },
+          "action": {
+            "type": "postback",
+            "data": "rmConstructing"
+          }
+        },
+        {
+          "bounds": {
+            "x": 267,
+            "y": 170,
+            "width": 500,
+            "height": 500
+          },
+          "action": {
+            "type": "postback",
+            "data": "rmConstructing"
+          }
+        },
+        {
+          "bounds": {
+            "x": 1000,
+            "y": 70,
+            "width": 500,
+            "height": 500
+          },
+          "action": {
+            "type": "postback",
+            "data": "rmAttendance"
+          }
+        },
+        {
+          "bounds": {
+            "x": 1761,
+            "y": 170,
+            "width": 500,
+            "height": 500
+          },
+          "action": {
+            "type": "postback",
+            "data": "rmConstructing"
+          }
+        },
+        {
+          "bounds": {
+            "x": 1940,
+            "y": 850,
+            "width": 500,
+            "height": 500
+          },
+          "action": {
+            "type": "postback",
+            "data": "rmConstructing"
+          }
+        },
+        {
+          "bounds": {
+            "x": 600,
+            "y": 785,
+            "width": 1300,
+            "height": 900
+          },
+          "action": {
+            "type": "postback",
+            "data": {
+              "responseType": "msg",
+              "msgName": "rmDesc"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "rmName": "rmTest3",
+    "rm": {
+      "name": "rmTest3",
+      "size": {
+        "width": 2500,
+        "height": 843
+      },
+      "selected": false,
+      "chatBarText": "3格選單測試",
+      "areas": [
+        {
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "postback",
+            "data": "!admin",
+            "text": "!admin"
+          }
+        },
+        {
+          "bounds": {
+            "x": 834,
+            "y": 0,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "postback",
+            "data": "action=test2"
+          }
+        },
+        {
+          "bounds": {
+            "x": 1668,
+            "y": 0,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "postback",
+            "data": "action=test3"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "rmName": "rmTest6",
+    "rm": {
+      "name": "rmTest6",
+      "size": {
+        "width": 2500,
+        "height": 1686
+      },
+      "selected": false,
+      "chatBarText": "6格選單測試",
+      "areas": [
+        {
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "postback",
+            "data": "action=test1"
+          }
+        },
+        {
+          "bounds": {
+            "x": 834,
+            "y": 0,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "postback",
+            "data": "action=test2"
+          }
+        },
+        {
+          "bounds": {
+            "x": 1668,
+            "y": 0,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "postback",
+            "data": "action=test3"
+          }
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 844,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "postback",
+            "data": "action=test4"
+          }
+        },
+        {
+          "bounds": {
+            "x": 834,
+            "y": 844,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "postback",
+            "data": "action=test5"
+          }
+        },
+        {
+          "bounds": {
+            "x": 1668,
+            "y": 844,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "postback",
+            "data": "action=test6"
+          }
+        }
+      ]
+    }
+  }
+]

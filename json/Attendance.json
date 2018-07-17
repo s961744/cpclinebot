@@ -1,0 +1,64 @@
+{
+  "date": "2018-07-05 09:45:23",
+  "dept_no": "1300",
+  "employee_no": [ "A6252", "A1925" ],
+  "total_count": 52,
+  "expected_attendence": 43,
+  "attendance_count": 42,
+  "attendance": [
+    {
+      "employee_no": "A0012272",
+      "employee_name": "張耀元",
+      "dept_no": "1360",
+      "dept_name": "行動開發課",
+      "class_no": "M2",
+      "class_name": "行政單位M2"
+    },
+    {
+      "employee_no": "A0011342",
+      "employee_name": "徐耀宗",
+      "dept_no": "1350",
+      "dept_name": "FAM開發課",
+      "class_no": "M1",
+      "class_name": "行政單位M1"
+    }
+  ],
+  "leave_count": 9,
+  "leave": [
+    {
+      "employee_no": "A0012272",
+      "employee_name": "張耀元",
+      "dept_no": "1360",
+      "dept_name": "行動開發課",
+      "class_no": "M2",
+      "class_name": "行政單位M2"
+    },
+    {
+      "employee_no": "A0011342",
+      "employee_name": "徐耀宗",
+      "dept_no": "1350",
+      "dept_name": "FAM開發課",
+      "class_no": "M1",
+      "class_name": "行政單位M1"
+    }
+  ],
+  "absence_count": 1,
+  "absence": [
+    {
+      "employee_no": "A0012272",
+      "employee_name": "張耀元",
+      "dept_no": "1360",
+      "dept_name": "行動開發課",
+      "class_no": "M2",
+      "class_name": "行政單位M2"
+    },
+    {
+      "employee_no": "A0011342",
+      "employee_name": "徐耀宗",
+      "dept_no": "1350",
+      "dept_name": "FAM開發課",
+      "class_no": "M1",
+      "class_name": "行政單位M1"
+    }
+  ]
+}
