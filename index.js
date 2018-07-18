@@ -22,8 +22,8 @@ const client = new line.Client(config);
 
 // 維持Heroku不Sleep
 setInterval(function () {
-    http.get("http://cpclinebot.herokuapp.com");
-    client.pushMessage(process.env.AdminLineUserId, { type: 'text', text: 'App alive' });
+    request.requestHttpGet("http://cpclinebot.herokuapp.com");
+    lineBotSdk.pushMessage(process.env.AdminLineUserId, { type: 'text', text: 'App alive' });
 }, 1500000); // every 25 minutes (1500000)
 
 app.post('/', line.middleware(config), (req, res) => {
@@ -66,7 +66,7 @@ var job = schedule.scheduleJob('5,20,35,50 * * * * *', function () {
                         try {
                             var messageSend = JSON.parse(message);
                             var ids = line_id.split(',');
-                            console.log('message_id:' + message_id + ',ids:' + ids);
+                            //console.log('message_id:' + message_id + ',ids:' + ids);
                             lineBotSdk.multicast(ids, messageSend).then(function () {
                                 // 更新line_message_send的actual_send_time
                                 var query = '?strMessageId=' + message_id;
