@@ -1,5 +1,5 @@
 'use strict';
-const
+const 
     line = require('@line/bot-sdk'),
     lineBotSdk = require('./js/lineBotSdk'),
     express = require('express'),
@@ -9,18 +9,22 @@ const
     postback = require('./js/postback'),
     request = require('./js/request');
 
-// 維持Heroku不Sleep
-//setInterval(function () {
-//    http.get('http://cpclinebottest.herokuapp.com');
-//}, 1500000); // every 25 minutes (1500000)
-
-//create LINE SDK config from env variables
+// create LINE SDK config from env variables
 const config = {
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
     channelSecret: process.env.CHANNEL_SECRET,
 };
 
 const app = express();
+
+// create LINE SDK client
+const client = new line.Client(config);
+
+// 維持Heroku不Sleep
+setInterval(function () {
+    http.get("http://cpclinebot.herokuapp.com");
+    client.pushMessage(process.env.AdminLineUserId, { type: 'text', text: 'App alive' });
+}, 1500000); // every 25 minutes (1500000)
 
 app.post('/', line.middleware(config), (req, res) => {
     // req.body.events should be an array of events
@@ -40,7 +44,7 @@ app.post('/', line.middleware(config), (req, res) => {
 // 因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
 var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
-    console.log('App now running on port', port);
+    console.log("App now running on port", port);
 });
 
 // 排程 1次/15sec
@@ -81,7 +85,7 @@ var job = schedule.scheduleJob('5,20,35,50 * * * * *', function () {
                 }
             }
         });
-    }).catch(function(e) {
+    }).catch(function (e) {
         return console.log('line_message_send request get fail:' + e);
     });
 });
