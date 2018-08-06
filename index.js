@@ -4,7 +4,6 @@ const
     lineBotSdk = require('./js/lineBotSdk'),
     express = require('express'),
     schedule = require('node-schedule'),
-    cp = require('child_process'),
     msg = require('./js/msg'),
     postback = require('./js/postback'),
     request = require('./js/request');
@@ -47,26 +46,24 @@ var server = app.listen(process.env.PORT || 8080, function () {
     console.log("App now running on port", port);
 });
 
-// 排程 1次/15sec
-var job = schedule.scheduleJob('5,20,35,50 * * * * *', function () {
+// 排程 1次/10sec
+var job = schedule.scheduleJob('5,15,15,35,45,55 * * * * *', function () {
     // 取得line_message_send中的待發訊息並發送
     request.getUrlFromJsonFile('lineRESTful').then(function (url) {
-        request.requestHttpGet(url).then(function (data) {
-            if (data.length < 3) {
-                //console.log('No messages need to be sent.');
-            }
-            else {
-                console.log(JSON.stringify(data));
+        request.requestHttpGetJson(url).then(function (data) {
+            if (data.length > 0) {
+                //console.log(JSON.stringify(data));
                 try {
-                    var jdata = JSON.parse(data);
-                    jdata.forEach(function (row) {
+                    //var jdata = JSON.parse(data);
+                    //jdata.forEach(function (row) {
+                    data.forEach(function (row) {
                         var message_id = row.message_id;
                         var line_id = row.line_id;
                         var message = row.message;
                         try {
                             var messageSend = JSON.parse(message);
                             var ids = line_id.split(',');
-                            //console.log('message_id:' + message_id + ',ids:' + ids);
+                            console.log('message_id:' + message_id + ',ids:' + ids);
                             lineBotSdk.multicast(ids, messageSend).then(function () {
                                 // 更新line_message_send的actual_send_time
                                 var query = '?strMessageId=' + message_id;
@@ -83,6 +80,9 @@ var job = schedule.scheduleJob('5,20,35,50 * * * * *', function () {
                 catch (e) {
                     return console.log(e);
                 }
+            }
+            else {
+                //console.log('No messages need to be sent.');
             }
         });
     }).catch(function (e) {
