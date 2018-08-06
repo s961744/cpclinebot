@@ -48,6 +48,27 @@ exports.requestHttpGet = function (url) {
 }
 
 /**
+* 處理http GET JSON 
+* @param {String} url
+*/
+exports.requestHttpGetJson = function (url) {
+    //console.log('requestHttpGetJson ' + url);
+    return new Promise(function (resolve, reject) {
+        http.get(url, function (res) {
+            var body = '';
+            res.on('data', function (chunk) {
+                body += chunk;
+            });
+            res.on('end', function () {
+                resolve(JSON.parse(body));
+            });
+        }).on('error', function (e) {
+            console.log("requestHttpGetJson error: ", e);
+        });
+    });
+}
+
+/**
 * 處理http POST
 * @param {String} url
 */
