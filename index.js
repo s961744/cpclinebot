@@ -63,7 +63,6 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                         try {
                             var messageSend = JSON.parse(jsonEscape(message));
                             var ids = line_id.split(',');
-                            console.log('newArray:' + newArray);
                             console.log('message_id:' + message_id + ',ids:' + ids);
                             lineBotSdk.multicast(ids, messageSend).then(function () {
                                 // 更新line_message_send的actual_send_time
