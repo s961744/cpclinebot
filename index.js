@@ -61,8 +61,9 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                         var line_id = row.line_id;
                         var message = row.message;
                         try {
-                            var messageSend = JSON.parse(message);
+                            var messageSend = JSON.parse(jsonEscape(message));
                             var ids = line_id.split(',');
+                            console.log('newArray:' + newArray);
                             console.log('message_id:' + message_id + ',ids:' + ids);
                             lineBotSdk.multicast(ids, messageSend).then(function () {
                                 // 更新line_message_send的actual_send_time
@@ -137,3 +138,7 @@ process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
     // application specific logging, throwing an error, or other logic here
 });
+
+function jsonEscape(str) {
+    return str.replace(/\n/g, "\\n").replace(/~n/g, "\\n");
+}
