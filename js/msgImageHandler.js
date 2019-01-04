@@ -3,8 +3,7 @@
 const
     lineBotSdk = require('./lineBotSdk'),
     msg = require('./msg'),
-    request = require('./request'),
-    AWS = require('aws-sdk');
+    request = require('./request');
 
 exports.msgImageHandle = function (event) {
     msg.getMsgFromJsonFile('msg', 'imgMsgReply').then(function (msgData) {
@@ -36,24 +35,6 @@ exports.msgImageHandle = function (event) {
                             }
                             break;
                     }
-
-                    //upload to S3
-                    //AWS.config.region = 'chinpoon';
-                    //var s3 = new AWS.S3({ region: 'ap-northeast-1' });
-                    //var date = new Date();
-                    //var params = {
-                    //    Bucket: 'chinpoon', // 資料夾
-                    //    Key: 'image-' + date.getFullYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds() + '.jpg', // 檔名
-                    //    ACL: 'public-read', // 權限公開
-                    //    Body: data
-                    //};
-                    //s3.putObject(params, function (err, data) {
-                    //    if (err) {
-                    //        console.log('Error uploading image: ', err);
-                    //    } else {
-                    //        console.log('Successfully uploaded image on S3', data);
-                    //    }
-                    //})
 
                     //save file to Server
                     request.getUrlFromJsonFile('fileRESTful').then(function (url) {
