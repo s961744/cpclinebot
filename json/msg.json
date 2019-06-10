@@ -116,7 +116,7 @@
     "msgType": "auth",
     "msg": {
       "type": "text",
-      "text": "已收到您輸入的驗證碼!\n請將表單送出，\n並等待權限審核流程完成，\n謝謝!"
+      "text": "已收到您輸入的驗證碼!\n請回到EB表單完成驗證後，\n送出並等待權限審核流程，\n謝謝!"
     }
   },
   {
@@ -142,7 +142,7 @@
           {
             "type": "postback",
             "label": "代號設定",
-            "data": "{\"responseType\":\"msg\",\"msgName\":\"gmCodeSetting\"}"
+            "data": "{\"responseType\":\"msg\",\"msgName\":\"gmVerify\"}"
           },
           {
             "type": "postback",
@@ -156,7 +156,7 @@
           },
           {
             "type": "postback",
-            "label": "敬鵬LineBot功能解除",
+            "label": "群組停用",
             "data": "{\"responseType\":\"msg\",\"msgName\":\"gmBreak\"}"
           }
         ]
@@ -164,11 +164,11 @@
     }
   },
   {
-    "msgName": "gmCodeSetting",
+    "msgName": "gmVerify",
     "msgType": "gm",
     "msg": {
       "type": "text",
-      "text": "請輸入於EB申請取得的群組代號\n(ex:GP001)"
+      "text": "請輸入驗證代碼(ex:G1234)"
     }
   },
   {
