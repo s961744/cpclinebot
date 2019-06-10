@@ -60,6 +60,7 @@ exports.msgTextHandle = function (event) {
                     var urlName = 'lineRESTful';
                     var path = '/LineGroupAuth'
                     request.getUrlFromJsonFile(urlName).then(function (url) {
+                        console.log('url:' + url + path + ',info:' + info);
                         request.requestHttpPost(url + path, postData);
                     });
                 }).catch(function (error) {
