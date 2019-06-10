@@ -120,6 +120,14 @@
     }
   },
   {
+    "msgName": "groupAuthApply",
+    "msgType": "auth",
+    "msg": {
+      "type": "text",
+      "text": "已收到您輸入的驗證代碼!\n請回到表單上點選驗證按鈕，\n完成驗證後即可送出表單，\n謝謝!"
+    }
+  },
+  {
     "msgName": "gmAdminOnly",
     "msgType": "gm",
     "msg": {
