@@ -64,9 +64,9 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                             var messageSend = JSON.parse(jsonEscape(message));
                             var ids = line_id.split(',');
                             console.log('message_id:' + message_id + ',ids:' + ids);
-                            if (ids.startsWith('C'))
+                            if (ids[0].startsWith('C'))
                             {
-                                lineBotSdk.pushMessage(ids, messageSend).then(function () {
+                                lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
                                     // 更新line_message_send的actual_send_time
                                     var query = '?strMessageId=' + message_id;
                                     request.requestHttpPut(url + query, '');
