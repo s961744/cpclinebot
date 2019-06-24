@@ -6,5 +6,9 @@
   {
     "urlName": "fileRESTful",
     "url": "http://116.50.39.201:7102/FileRESTful/resources/FileRESTful/postFile"
+  },
+  {
+    "urlName": "node-RED30",
+    "url": "https://iot.tw.chinpoon.com:21880"
   }
 ]
