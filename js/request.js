@@ -197,8 +197,9 @@ exports.requestHttpsGet = function (url) {
 * 處理https POST
 * @param {String} url
 * @param {String} data
+* @param {Int} port
 */
-exports.requestHttpsPost = function (url, data) {
+exports.requestHttpsPost = function (url, data, port) {
     return new Promise(function (resolve, reject) {
         //解析 url 地址
         var urlData = urltil.parse(url);
@@ -209,7 +210,9 @@ exports.requestHttpsPost = function (url, data) {
             //目标地址 
             path: urlData.path,
             //请求方法
-            method: 'POST'
+            method: 'POST',
+            //PORT
+            port: port
         };
         var req = https.request(options, function (res) {
             var buffer = [], result = '';
