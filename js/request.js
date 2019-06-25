@@ -209,12 +209,7 @@ exports.requestHttpsPost = function (url, data) {
             //目标地址 
             path: urlData.path,
             //请求方法
-            method: 'POST',
-            //头部协议
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Content-Length': Buffer.byteLength(data, 'utf-8')
-            }
+            method: 'POST'
         };
         var req = https.request(options, function (res) {
             var buffer = [], result = '';
