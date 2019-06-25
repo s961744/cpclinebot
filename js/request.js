@@ -5,7 +5,6 @@ const
     http = require('http'),
     https = require('https'),
     jsonProcess = require('./jsonProcess');
-
 /**
 * 處理http GET
 * @param {String} url
@@ -212,7 +211,9 @@ exports.requestHttpsPost = function (url, data, port) {
             //请求方法
             method: 'POST',
             //PORT
-            port: port
+            port: port,
+            //略過憑證驗證
+            rejectUnauthorized: false
         };
         var req = https.request(options, function (res) {
             var buffer = [], result = '';
