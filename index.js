@@ -69,7 +69,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                                 lineBotSdk.getGroupMemberIds(ids[0]).then((memberIds) => {
                                     console.log('memberIds:' + memberIds);
                                     request.getUrlFromJsonFile('node-RED30').then(function (url) {
-                                        request.requestHttpsPost(url + '/checkUserInGroup/' + ids[0], memberIds).then(function (result) {
+                                        request.requestHttpsPost(url + '/checkUserInGroup/' + ids[0], memberIds.join(), 21880).then(function (result) {
                                             console.log('checkUserInGroup result:' + result);
                                         });
                                     }).catch(function (e) {
