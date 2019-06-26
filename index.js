@@ -75,8 +75,8 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                                             var checkUserInGroupResult = JSON.parse(result);
                                             if (checkUserInGroupResult.noPermission.length > 0)
                                             {
-                                                lineBotSdk.pushMessage(ids[0], '{ "type": "text", "text": "有"' + checkUserInGroupResult.noPermission.length +
-                                                    '"位人員不在權限名單中\n本訊息將延後十分鐘發送，請群組管理員儘快處理" }').then(function () {
+                                                lineBotSdk.pushMessage(ids[0], { type: 'text', text: '有' + checkUserInGroupResult.noPermission.length +
+                                                    '位人員不在權限名單中\n本訊息將延後十分鐘發送，請群組管理員儘快處理' }).then(function () {
                                                     // 延後訊息的發送時間
                                                     request.requestHttpsPut(url + '/extendSendTime/' + message_id, '', 21880);
                                                 }).catch(function (error) {
