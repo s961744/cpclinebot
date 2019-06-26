@@ -64,6 +64,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                             var messageSend = JSON.parse(jsonEscape(message));
                             var ids = line_id.split(',');
                             console.log('message_id:' + message_id + ',ids:' + ids);
+                            //群組訊息
                             if (ids[0].startsWith('C'))
                             {
                                 lineBotSdk.getGroupMemberIds(ids[0]).then((memberIds) => {
@@ -71,6 +72,27 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                                     request.getUrlFromJsonFile('node-RED30').then(function (url) {
                                         request.requestHttpsPost(url + '/checkUserInGroup/' + ids[0], memberIds.join(), 21880).then(function (result) {
                                             console.log('checkUserInGroup result:' + result);
+                                            var checkUserInGroupResult = JSON.parse(result);
+                                            if (checkUserInGroupResult.noPermission.length > 0)
+                                            {
+                                                lineBotSdk.pushMessage(ids[0], '{ "type": "text", "text": "有"' + checkUserInGroupResult.noPermission.length +
+                                                    '"位人員不在權限名單中\n本訊息將延後十分鐘發送，請群組管理員儘快處理" }').then(function () {
+                                                        // 延後訊息的發送時間
+                                                        request.requestHttpsPut(url + '/extendSendTime/' + message_id, '', 21880);
+                                                }).catch(function (error) {
+                                                    console.log(error);
+                                                });
+                                            }
+                                            else
+                                            {
+                                                lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
+                                                    // 更新line_message_send的actual_send_time
+                                                    var query = '?strMessageId=' + message_id;
+                                                    request.requestHttpPut(url + query, '');
+                                                }).catch(function (error) {
+                                                    console.log(error);
+                                                });
+                                            }
                                         });
                                     }).catch(function (e) {
                                         return console.log('checkUserInGroup fail:' + e);
@@ -86,15 +108,8 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                                 }).catch((err) => {
                                     console.log(err);
                                 });
-
-                                lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                                    // 更新line_message_send的actual_send_time
-                                    var query = '?strMessageId=' + message_id;
-                                    request.requestHttpPut(url + query, '');
-                                }).catch(function (error) {
-                                    console.log(error);
-                                });
                             }
+                            //個人訊息
                             else
                             {
                                 lineBotSdk.multicast(ids, messageSend).then(function () {
