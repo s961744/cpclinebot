@@ -117,35 +117,35 @@ exports.requestHttpPut = function (url, data) {
     return new Promise(function (resolve, reject) {
         //解析 url 地址
         var urlData = urltil.parse(url);
-        //设置 https.request  options 传入的参数对象
+        //設置 https.request  options 傳入的參數對象
         var options = {
-            //目标主机地址
+            //目標主機地址
             hostname: urlData.hostname,
-            //目标地址 
+            //目標地址 
             path: urlData.path,
-            //目标PORT 
+            //目標PORT 
             port: urlData.port,
-            //请求方法
+            //請求方法
             method: 'PUT'
         };
         var req = http.request(options, function (res) {
             var buffer = [], result = '';
-            //用于监听 data 事件 接收数据
+            //用於監聽 data 事件 接收資料
             res.on('data', function (data) {
                 buffer.push(data);
             });
-            //用于监听 end 事件 完成数据的接收
+            //用於監聽 end 事件 完成資料的接收
             res.on('end', function () {
                 result = Buffer.concat(buffer).toString('utf-8');
                 resolve(result);
             })
         })
-            //监听错误事件
+            //監聽錯誤事件
             .on('error', function (err) {
                 console.log(err);
                 reject(err);
             });
-        //传入数据
+        //傳入資料
         req.write(data);
         req.end();
     });
@@ -202,13 +202,13 @@ exports.requestHttpsPost = function (url, data, port) {
     return new Promise(function (resolve, reject) {
         //解析 url 地址
         var urlData = urltil.parse(url);
-        //设置 https.request  options 传入的参数对象
+        //設置 https.request  options 傳入的參數對象
         var options = {
-            //目标主机地址
+            //目標主機地址
             hostname: urlData.hostname,
-            //目标地址 
+            //目標地址 
             path: urlData.path,
-            //请求方法
+            //請求方法
             method: 'POST',
             //PORT
             port: port,
@@ -217,27 +217,72 @@ exports.requestHttpsPost = function (url, data, port) {
         };
         var req = https.request(options, function (res) {
             var buffer = [], result = '';
-            //用于监听 data 事件 接收数据
+            //用於監聽 data 事件 接收資料
             res.on('data', function (data) {
                 buffer.push(data);
             });
-            //用于监听 end 事件 完成数据的接收
+            //用於監聽 end 事件 完成資料的接收
             res.on('end', function () {
                 result = Buffer.concat(buffer).toString('utf-8');
                 resolve(result);
             })
         })
-            //监听错误事件
+            //監聽錯誤事件
             .on('error', function (err) {
                 console.log(err);
                 reject(err);
             });
-        //传入数据
+        //傳入資料
         req.write(data);
         req.end();
     });
 }
 
+/**
+* 處理https PUT
+* @param {String} url
+* @param {String} data
+* @param {Int} port
+*/
+exports.requestHttpsPut = function (url, data, port) {
+    return new Promise(function (resolve, reject) {
+        //解析 url 地址
+        var urlData = urltil.parse(url);
+        //設置 https.request  options 傳入的參數對象
+        var options = {
+            //目標主機地址
+            hostname: urlData.hostname,
+            //目標地址 
+            path: urlData.path,
+            //請求方法
+            method: 'PUT',
+            //PORT
+            port: port,
+            //略過憑證驗證
+            rejectUnauthorized: false
+        };
+        var req = https.request(options, function (res) {
+            var buffer = [], result = '';
+            //用於監聽 data 事件 接收資料
+            res.on('data', function (data) {
+                buffer.push(data);
+            });
+            //用於監聽 end 事件 完成資料的接收
+            res.on('end', function () {
+                result = Buffer.concat(buffer).toString('utf-8');
+                resolve(result);
+            })
+        })
+            //監聽錯誤事件
+            .on('error', function (err) {
+                console.log(err);
+                reject(err);
+            });
+        //傳入資料
+        req.write(data);
+        req.end();
+    });
+}
 
 //get url from json file
 exports.getUrlFromJsonFile = function (urlName) {
