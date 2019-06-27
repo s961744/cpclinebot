@@ -36,7 +36,7 @@ function gmMemberList(event) {
                 membersData = JSON.parse(membersData);
                 for (var i = 0; i < membersData.sqlResult.length; i++)
                 {
-                    returnMembers += '\n' + membersData.sqlResult[i].account + '(' + membersData.sqlResult[i].data.name + ')';
+                    returnMembers += '\n' + membersData.sqlResult[i].account + '(' + membersData.sqlResult[i].name + ')';
                 }
                 console.log("returnMembers:" + returnMembers);
                 lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + returnMembers });
