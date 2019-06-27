@@ -32,13 +32,13 @@ function gmMemberList(event) {
             });
             request.requestHttpsPost(url + '/getUserData', members.slice(0, -1), 21880).then(function (membersData) {
                 var returnMembers = '';
-                console.log('membersData:' + membersData);
+                //console.log('membersData:' + membersData);
                 membersData = JSON.parse(membersData);
                 for (var i = 0; i < membersData.sqlResult.length; i++)
                 {
                     returnMembers += '\n' + membersData.sqlResult[i].account + '(' + membersData.sqlResult[i].name + ')';
                 }
-                console.log("returnMembers:" + returnMembers);
+                //console.log("returnMembers:" + returnMembers);
                 lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + returnMembers });
             });
         })
@@ -63,16 +63,21 @@ function gmMemberCheck(event) {
                     var noPermissionMembers = '';
                     checkUserInGroupResult.noPermission.forEach((id) => {
                         if (id != 'undefined') {
-                            request.requestHttpsPost(url + '/getUserData/' + id, '', 21880).then(function (data) {
-                                if (data.length > 0) {
-                                    noPermissionMembers += '\n' + data.account + '(' + data.name + ')'
-                                }
-                            });
+                            noPermissionMembers += "'" + id + "',";
                         }
                     });
-                    lineBotSdk.pushMessage(event.source.groupId, {
-                        type: 'text', text: '有' + checkUserInGroupResult.noPermission.length +
-                        '位人員不在權限名單中：\n' + noPermissionMembers + '\n請將人員移出群組\n或請群組管理員於EB系統維護權限'
+                    request.requestHttpsPost(url + '/getUserData', noPermissionMembers.slice(0, -1), 21880).then(function (membersData) {
+                        var returnMembers = '';
+                        console.log('membersData:' + membersData);
+                        membersData = JSON.parse(membersData);
+                        for (var i = 0; i < membersData.sqlResult.length; i++) {
+                            returnMembers += '\n' + membersData.sqlResult[i].account + '(' + membersData.sqlResult[i].name + ')';
+                        }
+                        console.log("returnMembers:" + returnMembers);
+                        lineBotSdk.replyMessage(event.replyToken, {
+                            type: 'text', text: '有' + membersData.sqlResult.length +
+                            '位人員不在權限名單中：' + returnMembers + '\n請將人員移出群組\n或請群組管理員於EB系統維護權限'
+                        });
                     });
                 }
                 else {
