@@ -155,38 +155,38 @@ exports.requestHttpPut = function (url, data) {
 * 處理https GET
 * @param {String} url
 */
-exports.requestHttpsGet = function (url) {  
+exports.requestHttpsGet = function (url) {
     return new Promise(function (resolve, reject) {
-        https.get(url, function (res) {
-            var chunks = [], result = '', size = 0;
-            res.on('data', function (chunk) {
-                chunks.push(chunk);
-                size += chunk.length;
+        //解析 url 地址
+        var urlData = urltil.parse(url);
+        //設置 https.request  options 傳入的參數對象
+        var options = {
+            //目標主機地址
+            hostname: urlData.hostname,
+            //目標地址 
+            path: urlData.path,
+            //請求方法
+            method: 'GET',
+            //PORT
+            port: port,
+            //略過憑證驗證
+            rejectUnauthorized: false
+        };
+        var req = https.request(options, function (res) {
+            var buffer = [], result = '';
+            //用於監聽 data 事件 接收資料
+            res.on('data', function (data) {
+                buffer.push(data);
             });
+            //用於監聽 end 事件 完成資料的接收
             res.on('end', function () {
-                var data = null;
-                switch (chunks.length) {
-                    case 0: data = new Buffer(0);
-                        break;
-                    case 1: data = chunks[0];
-                        break;
-                    default:
-                        data = new Buffer(size);
-                        for (var i = 0, pos = 0, l = chunks.length; i < l; i++) {
-                            var chunk = chunks[i];
-                            chunk.copy(data, pos);
-                            pos += chunk.length;
-                        }
-                        break;
-                }
-                if (data === '[]') {
-                    console.log('Empty result.');
-                }
-                else {
-                    resolve(data);
-                }
-            });
-        }).on('error', function (err) {
+                result = Buffer.concat(buffer).toString('utf-8');
+                resolve(result);
+            })
+        })
+        //監聽錯誤事件
+        .on('error', function (err) {
+            console.log(err);
             reject(err);
         });
     });
@@ -227,11 +227,11 @@ exports.requestHttpsPost = function (url, data, port) {
                 resolve(result);
             })
         })
-            //監聽錯誤事件
-            .on('error', function (err) {
-                console.log(err);
-                reject(err);
-            });
+        //監聽錯誤事件
+        .on('error', function (err) {
+            console.log(err);
+            reject(err);
+        });
         //傳入資料
         req.write(data);
         req.end();
@@ -273,11 +273,11 @@ exports.requestHttpsPut = function (url, data, port) {
                 resolve(result);
             })
         })
-            //監聽錯誤事件
-            .on('error', function (err) {
-                console.log(err);
-                reject(err);
-            });
+        //監聽錯誤事件
+        .on('error', function (err) {
+            console.log(err);
+            reject(err);
+        });
         //傳入資料
         req.write(data);
         req.end();
