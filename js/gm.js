@@ -35,9 +35,10 @@ function gmMemberList(event) {
                         }
                     });
                 }
+            }).then(() => {
+                console.log(members);
+                lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + members });
             });
-            console.log(members);
-            lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + members });
         });
     })
     .catch((err) => {
