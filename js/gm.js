@@ -30,24 +30,16 @@ function gmMemberList(event) {
                     members += "'" + id + "',";
                 }
             });
-            request.requestHttpsPost(url + '/getUserData', members.slice(0, -1), 21880).then(function (data) {
-                console.log(data);
-
-                //lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + members });
-                //memberIds.forEach((id) => {
-                //    if (id != 'undefined') {
-                //        //console.log('url:' + url + '/getUserData/' + id);
-                //        request.requestHttpsPost(url + '/getUserData/' + id, '', 21880).then(function (data) {
-                //            console.log('data:' + data);
-                //            if (data.length > 0) {
-                //                members += '\n' + data.account + '(' + data.name + ')'
-                //            }
-                //        });
-                //    }
-                //}).then(() => {
-                //    console.log(members);
-                //    lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + members });
-                //});
+            request.requestHttpsPost(url + '/getUserData', members.slice(0, -1), 21880).then(function (membersData) {
+                var returnMembers = '';
+                membersData.sqlResult.forEach((data) => {
+                    console.log('data:' + data);
+                    if (data.length > 0) {
+                        returnMembers += '\n' + data.account + '(' + data.name + ')'
+                    }
+                    console.log(members);
+                    lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + returnMembers });
+                });
             });
         })
         .catch((err) => {
