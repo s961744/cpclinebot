@@ -29,8 +29,9 @@ function gmMemberList(event) {
                 if (id != 'undefined') {
                     //console.log('url:' + url + '/getUserData/' + id);
                     request.requestHttpsPost(url + '/getUserData/' + id, '', 21880).then(function (data) {
+                        console.log('data:' + data);
                         if (data.length > 0) {
-                            members += '\n' + data.account + '(' + data.name + ')'
+                            members += '\n' + data[0].account + '(' + data[0].name + ')'
                         }
                     });
                 }
@@ -58,7 +59,7 @@ function gmMemberCheck(event) {
                         if (id != 'undefined') {
                             request.requestHttpsPost(url + '/getUserData/' + id, '', 21880).then(function (data) {
                                 if (data.length > 0) {
-                                    noPermissionMembers += '\n' + data.account + '(' + data.name + ')'
+                                    noPermissionMembers += '\n' + data[0].account + '(' + data[0].name + ')'
                                 }
                             });
                         }
