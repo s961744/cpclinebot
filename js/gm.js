@@ -25,8 +25,12 @@ function gmMemberList(event) {
     lineBotSdk.getGroupMemberIds(event.source.groupId).then((memberIds) => {
         var members = '';
         request.getUrlFromJsonFile('node-RED30').then(function (url) {
-            memberIds = memberIds.join(',');
-            request.requestHttpsPost(url + '/getUserData', memberIds, 21880).then(function (data) {
+            memberIds.forEach((id) => {
+                if (id != 'undefined') {
+                    members += "'" + id + "',";
+                }
+            });
+            request.requestHttpsPost(url + '/getUserData', members.slice(0, -1), 21880).then(function (data) {
                 console.log(data);
 
                 //lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + members });
