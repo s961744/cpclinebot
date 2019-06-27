@@ -33,6 +33,7 @@ function gmMemberList(event) {
             request.requestHttpsPost(url + '/getUserData', members.slice(0, -1), 21880).then(function (membersData) {
                 var returnMembers = '';
                 console.log('membersData:' + membersData);
+                membersData = JSON.parse(membersData);
                 for (var i = 0; i < membersData.sqlResult.length; i++)
                 {
                     returnMembers += '\n' + membersData.sqlResult[i].account + '(' + membersData.sqlResult[i].data.name + ')';
