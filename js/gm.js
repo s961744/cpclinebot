@@ -39,7 +39,7 @@ function gmMemberList(event) {
                     returnMembers += '\n' + membersData.sqlResult[i].account + '(' + membersData.sqlResult[i].name + ')';
                 }
                 //console.log("returnMembers:" + returnMembers);
-                lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + returnMembers });
+                lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員清單查詢：' + returnMembers });
             });
         })
         .catch((err) => {
@@ -75,14 +75,14 @@ function gmMemberCheck(event) {
                         }
                         console.log("returnMembers:" + returnMembers);
                         lineBotSdk.replyMessage(event.replyToken, {
-                            type: 'text', text: '有' + membersData.sqlResult.length +
+                            type: 'text', text: '人員比對查詢：\n有' + membersData.sqlResult.length +
                             '位人員不在權限名單中：' + returnMembers + '\n請將人員移出群組\n或請群組管理員於EB系統維護權限'
                         });
                     });
                 }
                 else {
                     lineBotSdk.pushMessage(event.source.groupId, {
-                        type: 'text', text: '群組成員皆有權限'
+                        type: 'text', text: '人員比對查詢：\n群組成員皆有權限'
                     });
                 }
             });
