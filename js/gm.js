@@ -27,7 +27,7 @@ function gmMemberList(event) {
         request.getUrlFromJsonFile('node-RED30').then(function (url) {
             memberIds.forEach((id) => {
                 if (id != 'undefined') {
-                    request.requestHttpsGet(url + '/' + id).then(function (data) {
+                    request.requestHttpsGet(url + '/' + id, 21880).then(function (data) {
                         if (data.length > 0) {
                             members += '\n' + data.account + '(' + data.name + ')'
                         }
@@ -55,7 +55,7 @@ function gmMemberCheck(event) {
                     var noPermissionMembers = '';
                     checkUserInGroupResult.noPermission.forEach((id) => {
                         if (id != 'undefined') {
-                            request.requestHttpsGet(url + '/' + id).then(function (data) {
+                            request.requestHttpsGet(url + '/' + id, 21880).then(function (data) {
                                 if (data.length > 0) {
                                     noPermissionMembers += '\n' + data.account + '(' + data.name + ')'
                                 }

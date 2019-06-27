@@ -154,8 +154,9 @@ exports.requestHttpPut = function (url, data) {
 /**
 * 處理https GET
 * @param {String} url
+* @param {Int} port
 */
-exports.requestHttpsGet = function (url) {
+exports.requestHttpsGet = function (url, port) {
     return new Promise(function (resolve, reject) {
         //解析 url 地址
         var urlData = urltil.parse(url);
