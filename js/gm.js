@@ -2,7 +2,7 @@
 
 const
     lineBotSdk = require('./lineBotSdk'),
-    request = require('./js/request'),
+    request = require('./request'),
     msg = require('./msg');
 
 //群組功能處理
