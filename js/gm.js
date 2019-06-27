@@ -30,20 +30,24 @@ function gmMemberList(event) {
                 console.log(data);
 
                 //lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + members });
-            //memberIds.forEach((id) => {
-            //    if (id != 'undefined') {
-            //        //console.log('url:' + url + '/getUserData/' + id);
-            //        request.requestHttpsPost(url + '/getUserData/' + id, '', 21880).then(function (data) {
-            //            console.log('data:' + data);
-            //            if (data.length > 0) {
-            //                members += '\n' + data.account + '(' + data.name + ')'
-            //            }
-            //        });
-            //    }
-            //}).then(() => {
-            //    console.log(members);
-            //    lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + members });
-            //});
+                //memberIds.forEach((id) => {
+                //    if (id != 'undefined') {
+                //        //console.log('url:' + url + '/getUserData/' + id);
+                //        request.requestHttpsPost(url + '/getUserData/' + id, '', 21880).then(function (data) {
+                //            console.log('data:' + data);
+                //            if (data.length > 0) {
+                //                members += '\n' + data.account + '(' + data.name + ')'
+                //            }
+                //        });
+                //    }
+                //}).then(() => {
+                //    console.log(members);
+                //    lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + members });
+                //});
+            });
+        })
+        .catch((err) => {
+            console.log(err);
         });
     })
     .catch((err) => {
