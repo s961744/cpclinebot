@@ -32,14 +32,13 @@ function gmMemberList(event) {
             });
             request.requestHttpsPost(url + '/getUserData', members.slice(0, -1), 21880).then(function (membersData) {
                 var returnMembers = '';
-                membersData.sqlResult.forEach((data) => {
-                    console.log('data:' + data);
-                    if (data.length > 0) {
-                        returnMembers += '\n' + data.account + '(' + data.name + ')'
-                    }
-                    console.log(members);
-                    lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + returnMembers });
-                });
+                console.log('membersData:' + membersData);
+                for (var i = 0; i < membersData.sqlResult.length; i++)
+                {
+                    returnMembers += '\n' + membersData.sqlResult[i].account + '(' + membersData.sqlResult[i].data.name + ')';
+                }
+                console.log("returnMembers:" + returnMembers);
+                lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員：' + returnMembers });
             });
         })
         .catch((err) => {
