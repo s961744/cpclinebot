@@ -150,7 +150,7 @@
           {
             "type": "postback",
             "label": "代號設定",
-            "data": "{\"responseType\":\"gm\",\"msgName\":\"gmVerify\"}"
+            "data": "{\"responseType\":\"gm\",\"gmName\":\"gmVerify\"}"
           },
           {
             "type": "postback",
