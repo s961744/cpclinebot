@@ -191,7 +191,6 @@ exports.requestHttpsGet = function (url, port) {
             reject(err);
         });
         //傳入資料
-        req.write();
         req.end();
     });
 }
