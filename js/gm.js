@@ -30,7 +30,7 @@ function gmVerify(event) {
     var path = '/getGroupCode/' + event.source.groupId
     request.getUrlFromJsonFile(urlName).then(function (url) {
         console.log('url:' + url + path);
-        request.requestHttpsGet(url + path).then(function (data) {
+        request.requestHttpsGet(url + path, 21880).then(function (data) {
             console.log('data=' + data);
             msg.getMsgFromJsonFile('msg', 'gmVerify').then(function (msgData) {
                 lineBotSdk.replyMessage(event.replyToken, msgData);
