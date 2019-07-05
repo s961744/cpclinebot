@@ -8,6 +8,9 @@ const
 //群組功能處理
 exports.gmHandle = function (event, data) {
     switch (data.gmName) {
+        case 'gmVerify':
+            gmVerify(event);
+            break;
         case 'gmMemberList':
             gmMemberList(event);
             break;
@@ -18,6 +21,22 @@ exports.gmHandle = function (event, data) {
             gmBreakConfirm(event);
             break;
     }
+}
+
+//檢查群組代號
+function gmVerify(event) {
+    //檢查是否已有設定群組代號
+    var urlName = 'node-RED30';
+    var path = '/getGroupCode/' + event.source.groupId
+    request.getUrlFromJsonFile(urlName).then(function (url) {
+        console.log('url:' + url + path);
+        request.requestHttpsGet(url + path).then(function (data) {
+            console.log('data=' + data);
+            msg.getMsgFromJsonFile('msg', 'gmVerify').then(function (msgData) {
+                lineBotSdk.replyMessage(event.replyToken, msgData);
+            });
+        });
+    });
 }
 
 //取得群組成員名單(測試帳號無法使用)

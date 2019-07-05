@@ -45,38 +45,29 @@ exports.msgTextHandle = function (event) {
     }
     //群組權限申請驗證
     else if (event.message.text.toUpperCase().startsWith('G') && event.message.text.length === 5 && event.source.type === 'group') {
-        //檢查是否已有設定群組代號
-        var urlName = 'node-RED30';
-        var path = '/getGroupCode/' + event.source.groupId
-        request.getUrlFromJsonFile(urlName).then(function (url) {
-            console.log('url:' + url + path);
-            request.requestHttpsGet(url + path).then(function (data) {
-                console.log('data=' + data);
-                msg.getMsgFromJsonFile('msg', 'groupAuthApply').then(function (msgData) {
-                    lineBotSdk.replyMessage(event.replyToken, msgData).then(function () {
-                        lineBotSdk.getDisplayName(event.source.userId).then(function (displayName) {
-                            //發送驗證資訊給管理員
-                            var msg = {
-                                type: 'text', text: '*****LINE群組權限申請*****\nLine暱稱：' + displayName + '\n驗證碼：'
-                                + event.message.text + '\nUId：' + event.source.userId + '\nGId：' + event.source.groupId
-                            };
-                            lineBotSdk.pushMessage(process.env.AdminLineUserId, msg);
-                            //將groupId及verifyCode寫入line_group_auth
-                            var info = { groupId: event.source.groupId, verifyCode: event.message.text };
-                            var postData = JSON.stringify(info);
-                            var urlName = 'lineRESTful';
-                            var path = '/LineGroupAuth'
-                            request.getUrlFromJsonFile(urlName).then(function (url) {
-                                console.log('url:' + url + path + ',postData:' + postData);
-                                request.requestHttpPost(url + path, postData);
-                            });
-                        }).catch(function (error) {
-                            console.log(error);
-                        });
-                    }).catch(function (error) {
-                        console.log(error);
+        msg.getMsgFromJsonFile('msg', 'groupAuthApply').then(function (msgData) {
+            lineBotSdk.replyMessage(event.replyToken, msgData).then(function () {
+                lineBotSdk.getDisplayName(event.source.userId).then(function (displayName) {
+                    //發送驗證資訊給管理員
+                    var msg = {
+                        type: 'text', text: '*****LINE群組權限申請*****\nLine暱稱：' + displayName + '\n驗證碼：'
+                        + event.message.text + '\nUId：' + event.source.userId + '\nGId：' + event.source.groupId
+                    };
+                    lineBotSdk.pushMessage(process.env.AdminLineUserId, msg);
+                    //將groupId及verifyCode寫入line_group_auth
+                    var info = { groupId: event.source.groupId, verifyCode: event.message.text };
+                    var postData = JSON.stringify(info);
+                    var urlName = 'lineRESTful';
+                    var path = '/LineGroupAuth'
+                    request.getUrlFromJsonFile(urlName).then(function (url) {
+                        console.log('url:' + url + path + ',postData:' + postData);
+                        request.requestHttpPost(url + path, postData);
                     });
+                }).catch(function (error) {
+                    console.log(error);
                 });
+            }).catch(function (error) {
+                console.log(error);
             });
         });
     }
