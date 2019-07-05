@@ -31,7 +31,7 @@ function gmVerify(event) {
     request.getUrlFromJsonFile(urlName).then(function (url) {
         console.log('url:' + url + path);
         request.requestHttpsGet(url + path, 21880).then(function (result) {
-            result = JSON.parse(membersData);
+            result = JSON.parse(result);
             var groupCode = result.sqlResult[0].group_code;
             if (groupCode.toUpperCase().startsWith('GP')) {
                 lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '此群組已完成代號設定\n群組代號：' + groupCode });
