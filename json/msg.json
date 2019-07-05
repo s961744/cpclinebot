@@ -150,7 +150,7 @@
           {
             "type": "postback",
             "label": "代號設定",
-            "data": "{\"responseType\":\"msg\",\"msgName\":\"gmVerify\"}"
+            "data": "{\"responseType\":\"gm\",\"msgName\":\"gmVerify\"}"
           },
           {
             "type": "postback",
@@ -173,7 +173,7 @@
   },
   {
     "msgName": "gmVerify",
-    "msgType": "gm",
+    "msgType": "msg",
     "msg": {
       "type": "text",
       "text": "請輸入驗證代碼(ex:G1234)"
