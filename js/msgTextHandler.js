@@ -37,7 +37,7 @@ exports.msgTextHandle = function (event) {
     }
     //群組管理功能選單
     else if (event.message.text.toUpperCase() === 'GM' && event.source.type === 'group') {
-        msg.getMsgFromJsonFile('msg', event.message.text).then(function (msgData) {
+        msg.getMsgFromJsonFile('msg', event.message.text.toLowerCase()).then(function (msgData) {
             lineBotSdk.replyMessage(event.replyToken, msgData);
         }).catch(function (error) {
             console.log(error);
