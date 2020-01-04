@@ -43,11 +43,11 @@ exports.msgImageHandle = function (event) {
                         var random = Math.floor(Math.random() * 9999) + 1;
                         var fileName = now + random + '.png';
                         var path = '/LINE/Image/';
-                        console.log('uploading image:' + FileName);
+                        console.log('uploading image:' + fileName);
                         request.requestHttpPost(url + path + fileName, data).then(function (result) {
                             //msg.getMsgFromJsonFile('msg', 'imgUploadSuccess').then(function (msg) {
                             //    lineBotSdk.pushMessage(event.source.userId, msg);
-                                console.log('upload image:' + FileName + ', result' + result);
+                                console.log('upload image:' + fileName + ', result' + result);
                             //});
                         });
                     });
