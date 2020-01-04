@@ -6,8 +6,8 @@ const
     request = require('./request');
 
 exports.msgImageHandle = function (event) {
-    msg.getMsgFromJsonFile('msg', 'imgMsgReply').then(function (msgData) {
-        lineBotSdk.replyMessage(event.replyToken, msgData).then(function () {
+    //msg.getMsgFromJsonFile('msg', 'imgMsgReply').then(function (msgData) {
+        //lineBotSdk.replyMessage(event.replyToken, msgData).then(function () {
             lineBotSdk.getMessageContent(event.message.id).then((stream) => {
                 var chunks = [];
                 var size = 0;
@@ -45,10 +45,10 @@ exports.msgImageHandle = function (event) {
                         var path = '/LINE/Image/';
                         console.log('uploading image:' + FileName);
                         request.requestHttpPost(url + path + fileName, data).then(function (result) {
-                            msg.getMsgFromJsonFile('msg', 'imgUploadSuccess').then(function (msg) {
-                                lineBotSdk.pushMessage(event.source.userId, msg);
+                            //msg.getMsgFromJsonFile('msg', 'imgUploadSuccess').then(function (msg) {
+                            //    lineBotSdk.pushMessage(event.source.userId, msg);
                                 console.log('upload image:' + FileName + ', result' + result);
-                            });
+                            //});
                         });
                     });
                 });
@@ -56,9 +56,9 @@ exports.msgImageHandle = function (event) {
             // success 
             console.log(event.message);
 
-        }).catch(function (error) {
+        //}).catch(function (error) {
             // error 
-            console.log(error);
-        });
-    });  
+        //    console.log(error);
+        //});
+    //});  
 }
