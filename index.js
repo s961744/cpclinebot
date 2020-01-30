@@ -53,7 +53,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
         // 取得line_message_send中的待發訊息
         request.requestHttpsGet(url + '/getMessageToSend', 21880).then(function (data) {
             if (data.length > 0) {
-                //console.log(JSON.stringify(data));
+                console.log(JSON.stringify(data));
                 try {
                     var jdata = JSON.parse(data);
                     if (jdata.sqlResult != null)
