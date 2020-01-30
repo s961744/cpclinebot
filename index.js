@@ -1,21 +1,14 @@
 'use strict';
-const
+const 
     line = require('@line/bot-sdk'),
     lineBotSdk = require('./js/lineBotSdk'),
     express = require('express'),
     schedule = require('node-schedule'),
-    cp = require('child_process'),
     msg = require('./js/msg'),
     postback = require('./js/postback'),
-    request = require('./js/request'),
-    jsonProcess = require('./js/jsonProcess');
+    request = require('./js/request');
 
-// 維持Heroku不Sleep
-//setInterval(function () {
-//    http.get('http://cpclinebottest.herokuapp.com');
-//}, 1500000); // every 25 minutes (1500000)
-
-//create LINE SDK config from env variables
+// create LINE SDK config from env variables
 const config = {
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
     channelSecret: process.env.CHANNEL_SECRET,
@@ -23,29 +16,14 @@ const config = {
 
 const app = express();
 
-app.use(express.static(__dirname + '/public'));
+// create LINE SDK client
+const client = new line.Client(config);
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index3.html');
-});
-
-app.get('/api/', function (req, res) {
-    //console.log(req.query);
-    var objsArray = [];
-    jsonProcess.getJsonFileArrayData('url').then(function (data) {
-        objsArray = JSON.parse(data);
-        var obj = objsArray.filter(function (url) {
-            return url.urlName == req.query.urlName;
-        });
-        var url = obj[0].url;
-        var path = req.query.path;
-        request.requestHttpGetJson(url + path).then(function (data) {
-            res.send(data);
-        });
-    }).catch(function (error) {
-        console.log(error);
-    });
-});
+// 維持Heroku不Sleep
+setInterval(function () {
+    request.requestHttpGet("http://cpclinebot.herokuapp.com");
+    lineBotSdk.pushMessage(process.env.AdminLineUserId, { type: 'text', text: 'App alive' });
+}, 1500000); // every 25 minutes (1500000)
 
 app.post('/', line.middleware(config), (req, res) => {
     // req.body.events should be an array of events
@@ -65,7 +43,7 @@ app.post('/', line.middleware(config), (req, res) => {
 // 因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
 var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
-    console.log('App now running on port', port);
+    console.log("App now running on port", port);
 });
 
 // 排程 1次/10sec
@@ -155,6 +133,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
         return console.log('line_message_send request get fail:' + e);
     });
 });
+
 
 // event handler
 function handleEvent(event) {
