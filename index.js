@@ -48,23 +48,19 @@ var server = app.listen(process.env.PORT || 8080, function () {
 
 // 排程 1次/10sec
 var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
-    // 取得外部Node-RED主機入口網址
-    request.getUrlFromJsonFile('node-RED30').then(function (url) {
-        // 取得line_message_send中的待發訊息
-        request.requestHttpsGet(url + '/getMessageToSend', 21880).then(function (data) {
+    // 取得line_message_send中的待發訊息並發送
+    request.getUrlFromJsonFile('lineRESTful').then(function (url) {
+        request.requestHttpGetJson(url).then(function (data) {
             if (data.length > 0) {
-                console.log(JSON.stringify(data));
+                //console.log(JSON.stringify(data));
                 try {
-                    var jdata = JSON.parse(data);
-                    jdata.sqlResult.forEach(function (row) {
-                        //data.sqlResult.forEach(function (row) {
+                    //var jdata = JSON.parse(data);
+                    //jdata.forEach(function (row) {
+                    data.forEach(function (row) {
                         var message_id = row.message_id;
                         var line_id = row.line_id;
                         var message = row.message;
                         try {
-                            // 更新狀態為發送中(PR)
-                            //request.requestHttpsPut(url + '/processingMessage/' + message_id, '', 21880);
-                            // 將發送對象拆解
                             var messageSend = JSON.parse(jsonEscape(message));
                             var ids = line_id.split(',');
                             console.log('message_id:' + message_id + ',ids:' + ids);
@@ -109,9 +105,8 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                             {
                                 lineBotSdk.multicast(ids, messageSend).then(function () {
                                     // 更新line_message_send的actual_send_time
-                                    request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
-                                    //var query = '?strMessageId=' + message_id;
-                                    //request.requestHttpPut(url + query, '');
+                                    var query = '?strMessageId=' + message_id;
+                                    request.requestHttpPut(url + query, '');
                                 }).catch(function (error) {
                                     console.log(error);
                                 });
@@ -134,6 +129,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
         return console.log('line_message_send request get fail:' + e);
     });
 });
+
 
 // event handler
 function handleEvent(event) {
