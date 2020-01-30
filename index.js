@@ -63,7 +63,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                         var message = row.message;
                         try {
                             // 更新狀態為發送中(PR)
-                            request.requestHttpsPut(url + '/processingMessage/' + message_id, '', 21880);
+                            //request.requestHttpsPut(url + '/processingMessage/' + message_id, '', 21880);
                             // 將發送對象拆解
                             var messageSend = JSON.parse(jsonEscape(message));
                             var ids = line_id.split(',');
