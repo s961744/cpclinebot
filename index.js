@@ -128,7 +128,8 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                             {
                                 console.log('updateActualSendTimeId:' + updateActualSendTimeId);
                             }
-                        });
+                        }
+                        //});
                         // 更新line_message_send的actual_send_time
                         
                         //request.requestHttpsPut(url + '/actualSendTimeTest/'+ updateActualSendTimeId, '', 21880);
