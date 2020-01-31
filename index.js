@@ -73,33 +73,29 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                                 {
                                     lineBotSdk.getGroupMemberIds(ids[0]).then((memberIds) => {
                                         //console.log('memberIds:' + memberIds);
-                                        request.getUrlFromJsonFile('node-RED30').then(function (url) {
-                                            request.requestHttpsPost(url + '/checkUserInGroup/' + ids[0], memberIds.join(), 21880).then(function (result) {
-                                                //console.log('checkUserInGroup result:' + result);
-                                                var checkUserInGroupResult = JSON.parse(result);
-                                                if (checkUserInGroupResult.noPermission.length > 0)
-                                                {
-                                                    lineBotSdk.pushMessage(ids[0], { type: 'text', text: '訊息發送失敗\n因有' + checkUserInGroupResult.noPermission.length +
-                                                        '位人員不在權限名單中\n本訊息將延後十分鐘發送，請群組管理員儘快處理' }).then(function () {
-                                                        // 延後訊息的發送時間
-                                                        request.requestHttpsPut(url + '/extendSendTime/' + message_id, '', 21880);
-                                                    }).catch(function (error) {
-                                                        console.log(error);
-                                                    });
-                                                }
-                                                else
-                                                {
-                                                    lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                                                        // 更新line_message_send的actual_send_time
-                                                        //request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
-                                                    }).catch(function (error) {
-                                                        console.log(error);
-                                                    });
-                                                }
-                                            });
-                                        }).catch(function (e) {
-                                            return console.log('checkUserInGroup fail:' + e);
-                                        });
+                                        //request.requestHttpsPost(url + '/checkUserInGroup/' + ids[0], memberIds.join(), 21880).then(function (result) {
+                                            //console.log('checkUserInGroup result:' + result);
+                                            //var checkUserInGroupResult = JSON.parse(result);
+                                            //if (checkUserInGroupResult.noPermission.length > 0)
+                                            //{
+                                            //    lineBotSdk.pushMessage(ids[0], { type: 'text', text: '訊息發送失敗\n因有' + checkUserInGroupResult.noPermission.length +
+                                            //        '位人員不在權限名單中\n本訊息將延後十分鐘發送，請群組管理員儘快處理' }).then(function () {
+                                            //        // 延後訊息的發送時間
+                                            //        request.requestHttpsPut(url + '/extendSendTime/' + message_id, '', 21880);
+                                            //    }).catch(function (error) {
+                                            //        console.log(error);
+                                            //   });
+                                            //}
+                                            //else
+                                            //{
+                                                lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
+                                                    // 更新line_message_send的actual_send_time
+                                                    //request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
+                                                }).catch(function (error) {
+                                                    console.log(error);
+                                                });
+                                            //}
+                                        //});
                                     }).catch((err) => {
                                         console.log(err);
                                     });
