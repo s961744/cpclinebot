@@ -50,6 +50,16 @@ var server = app.listen(process.env.PORT || 8080, function () {
 var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
     // 取得外部Node-RED主機入口網址
     request.getUrlFromJsonFile('node-RED30').then(function (url) {
+        getMessageToSend(url).then(function(updateActualSendTimeId){
+            updateActualSendTime(url, updateActualSendTimeId);
+        });
+    }).catch(function(e) {
+        return console.log('line_message_send request get fail:' + e);
+    });
+});
+
+function getMessageToSend (url) {
+    return new Promise(function(resolve, reject){
         // 取得line_message_send中的待發訊息
         request.requestHttpsGet(url + '/getMessageToSend', 21880).then(function (data) {
             if (data.length > 0) {
@@ -126,28 +136,33 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                             }
                             if (i == jdata.sqlResult.length - 1)
                             {
-                                console.log('updateActualSendTimeId:' + updateActualSendTimeId);
+                                
                             }
                         }
                         //});
-                        // 更新line_message_send的actual_send_time
                         
-                        //request.requestHttpsPut(url + '/actualSendTimeTest/'+ updateActualSendTimeId, '', 21880);
                     }
                 }
                 catch (e) {
                     return console.log(e);
                 }
+                resolve(updateActualSendTimeId);
             }
             else {
+                reject("No messages need to be sent.");
                 //console.log('No messages need to be sent.');
             }
         });
-    }).catch(function(e) {
-        return console.log('line_message_send request get fail:' + e);
     });
-});
+}
 
+function updateActualSendTime (url, updateActualSendTimeId) {
+    return new Promise(function(resolve, reject){
+        // 更新line_message_send的actual_send_time
+        console.log('updateActualSendTimeId:' + updateActualSendTimeId);
+        //request.requestHttpsPut(url + '/actualSendTimeTest/'+ updateActualSendTimeId, '', 21880);
+    });
+}
 
 // event handler
 function handleEvent(event) {
