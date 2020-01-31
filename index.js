@@ -154,10 +154,10 @@ function getMessageToSend (url) {
                     return console.log(e);
                 }
                 console.log('resolve updateActualSendTimeId:' + updateActualSendTimeId);
-                resolve(updateActualSendTimeId);
+                //(updateActualSendTimeId);
             }
             else {
-                reject("No messages need to be sent.");
+                //reject("No messages need to be sent.");
                 //console.log('No messages need to be sent.');
             }
         });
