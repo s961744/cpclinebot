@@ -112,7 +112,9 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                                     lineBotSdk.multicast(ids, messageSend).then(function () {
                                         // 更新line_message_send的actual_send_time
                                         request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
+                                        console.log('message_id:' + message_id);
                                         updateActualSendTimeId += message_id + ",";
+                                        console.log('updateActualSendTimeId:' + updateActualSendTimeId);
                                     }).catch(function (error) {
                                         console.log(error);
                                     });
