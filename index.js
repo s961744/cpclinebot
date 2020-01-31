@@ -50,18 +50,6 @@ var server = app.listen(process.env.PORT || 8080, function () {
 var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
     // 取得外部Node-RED主機入口網址
     request.getUrlFromJsonFile('node-RED30').then(function (url) {
-        getMessageToSend(url).then(function(updateActualSendTimeId){
-            console.log('updateActualSendTime updateActualSendTimeId:' + updateActualSendTimeId);
-            updateActualSendTime(url, updateActualSendTimeId);
-        });
-    }).catch(function(e) {
-        return console.log('line_message_send request get fail:' + e);
-    });
-});
-
-function getMessageToSend (url) {
-    
-    //return new Promise(function(resolve, reject){
         // 取得line_message_send中的待發訊息
         request.requestHttpsGet(url + '/getMessageToSend', 21880).then(function (data) {
             if (data.length > 0) {
@@ -70,14 +58,11 @@ function getMessageToSend (url) {
                     var jdata = JSON.parse(data);
                     if (jdata.sqlResult != null)
                     {
-                        let promises = [];
-                        var updateActualSendTimeId = "";
-                        for (var i =0; i < jdata.sqlResult.length; i++) {
-                        //jdata.sqlResult.forEach(function (row) {
-                        //data.sqlResult.forEach(function (row) {
-                            var message_id = jdata.sqlResult[i].message_id;
-                            var line_id = jdata.sqlResult[i].line_id;
-                            var message = jdata.sqlResult[i].message;
+                        //for (var i =0; i < jdata.sqlResult.length; i++) {
+                        jdata.sqlResult.forEach(function (row) {
+                            var message_id = row.message_id;
+                            var line_id = row.line_id;
+                            var message = row.message;
                             try {
                                 // 將發送對象拆解
                                 var messageSend = JSON.parse(jsonEscape(message));
@@ -106,12 +91,7 @@ function getMessageToSend (url) {
                                                 {
                                                     lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
                                                         // 更新line_message_send的actual_send_time
-                                                        request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
-                                                        updateActualSendTimeId += message_id + ",";
-                                                        promises.push(new Promise((resolve, reject) => {
-                                                            console.log(i + 'promises push :' + promises);
-                                                            resolve(message_id);
-                                                        }));
+                                                        //request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
                                                     }).catch(function (error) {
                                                         console.log(error);
                                                     });
@@ -129,13 +109,7 @@ function getMessageToSend (url) {
                                 {
                                     lineBotSdk.multicast(ids, messageSend).then(function () {
                                         // 更新line_message_send的actual_send_time
-                                        request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
-                                        console.log('message_id:' + message_id);
-                                        updateActualSendTimeId += message_id + ",";
-                                        promises.push(new Promise((resolve, reject) => {
-                                            console.log(i + 'promises push :' + promises);
-                                            resolve(message_id);
-                                        }));
+                                        //request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
                                     }).catch(function (error) {
                                         console.log(error);
                                     });
@@ -144,38 +118,24 @@ function getMessageToSend (url) {
                             catch (e) {
                                 return console.log(e);
                             }
-                            if (i == jdata.sqlResult.length - 1)
-                            {
-                                
-                            }
-                        }
-                        //});
-                        console.log('promises:' + promises);
-                        return Promise.all(promises);
+                        });
+                        // 更新line_message_send的actual_send_time
+                        //request.requestHttpsPut(url + '/actualSendTimeTest/'+ updateActualSendTimeId, '', 21880);
                     }
                 }
                 catch (e) {
                     return console.log(e);
                 }
-                //console.log('resolve updateActualSendTimeId:' + updateActualSendTimeId);
-                //(updateActualSendTimeId);
             }
             else {
-                //reject("No messages need to be sent.");
                 //console.log('No messages need to be sent.');
             }
         });
-    
-    //});
-}
-
-function updateActualSendTime (url, updateActualSendTimeId) {
-    return new Promise(function(resolve, reject){
-        // 更新line_message_send的actual_send_time
-        console.log('updateActualSendTimeId:' + updateActualSendTimeId);
-        //request.requestHttpsPut(url + '/actualSendTimeTest/'+ updateActualSendTimeId, '', 21880);
+    }).catch(function(e) {
+        return console.log('line_message_send request get fail:' + e);
     });
-}
+});
+
 
 // event handler
 function handleEvent(event) {
