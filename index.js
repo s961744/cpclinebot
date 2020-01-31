@@ -153,7 +153,7 @@ function getMessageToSend (url) {
                 catch (e) {
                     return console.log(e);
                 }
-                console.log('resolve updateActualSendTimeId:' + updateActualSendTimeId);
+                //console.log('resolve updateActualSendTimeId:' + updateActualSendTimeId);
                 //(updateActualSendTimeId);
             }
             else {
