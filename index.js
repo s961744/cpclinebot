@@ -109,7 +109,7 @@ function getMessageToSend (url) {
                                                         updateActualSendTimeId += message_id + ",";
                                                         promises.push(new Promise((resolve, reject) => {
                                                             resolve(message_id);
-                                                        }
+                                                        }));
                                                     }).catch(function (error) {
                                                         console.log(error);
                                                     });
@@ -132,7 +132,7 @@ function getMessageToSend (url) {
                                         updateActualSendTimeId += message_id + ",";
                                         promises.push(new Promise((resolve, reject) => {
                                             resolve(message_id);
-                                        }
+                                        }));
                                     }).catch(function (error) {
                                         console.log(error);
                                     });
