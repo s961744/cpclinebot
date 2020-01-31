@@ -51,6 +51,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
     // 取得外部Node-RED主機入口網址
     request.getUrlFromJsonFile('node-RED30').then(function (url) {
         getMessageToSend(url).then(function(updateActualSendTimeId){
+            console.log('updateActualSendTime updateActualSendTimeId:' + updateActualSendTimeId);
             updateActualSendTime(url, updateActualSendTimeId);
         });
     }).catch(function(e) {
@@ -59,7 +60,8 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
 });
 
 function getMessageToSend (url) {
-    return new Promise(function(resolve, reject){
+    let promises = [];
+    //return new Promise(function(resolve, reject){
         // 取得line_message_send中的待發訊息
         request.requestHttpsGet(url + '/getMessageToSend', 21880).then(function (data) {
             if (data.length > 0) {
@@ -70,7 +72,6 @@ function getMessageToSend (url) {
                     {
                         var updateActualSendTimeId = "";
                         for (var i =0; i < jdata.sqlResult.length; i++) {
-
                         //jdata.sqlResult.forEach(function (row) {
                         //data.sqlResult.forEach(function (row) {
                             var message_id = jdata.sqlResult[i].message_id;
@@ -106,6 +107,9 @@ function getMessageToSend (url) {
                                                         // 更新line_message_send的actual_send_time
                                                         request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
                                                         updateActualSendTimeId += message_id + ",";
+                                                        promises.push(new Promise((resolve, reject) => {
+                                                            resolve(message_id);
+                                                        }
                                                     }).catch(function (error) {
                                                         console.log(error);
                                                     });
@@ -126,6 +130,9 @@ function getMessageToSend (url) {
                                         request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
                                         console.log('message_id:' + message_id);
                                         updateActualSendTimeId += message_id + ",";
+                                        promises.push(new Promise((resolve, reject) => {
+                                            resolve(message_id);
+                                        }
                                     }).catch(function (error) {
                                         console.log(error);
                                     });
@@ -146,6 +153,7 @@ function getMessageToSend (url) {
                 catch (e) {
                     return console.log(e);
                 }
+                console.log('resolve updateActualSendTimeId:' + updateActualSendTimeId);
                 resolve(updateActualSendTimeId);
             }
             else {
@@ -153,7 +161,8 @@ function getMessageToSend (url) {
                 //console.log('No messages need to be sent.');
             }
         });
-    });
+    return Promise.all(promises);
+    //});
 }
 
 function updateActualSendTime (url, updateActualSendTimeId) {
