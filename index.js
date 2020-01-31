@@ -109,6 +109,7 @@ function getMessageToSend (url) {
                                                         request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
                                                         updateActualSendTimeId += message_id + ",";
                                                         promises.push(new Promise((resolve, reject) => {
+                                                            console.log(i + 'promises push :' + promises);
                                                             resolve(message_id);
                                                         }));
                                                     }).catch(function (error) {
@@ -132,6 +133,7 @@ function getMessageToSend (url) {
                                         console.log('message_id:' + message_id);
                                         updateActualSendTimeId += message_id + ",";
                                         promises.push(new Promise((resolve, reject) => {
+                                            console.log(i + 'promises push :' + promises);
                                             resolve(message_id);
                                         }));
                                     }).catch(function (error) {
