@@ -58,6 +58,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                     var jdata = JSON.parse(data);
                     if (jdata.sqlResult != null)
                     {
+                        var updateActualSendTimeId = "";
                         jdata.sqlResult.forEach(function (row) {
                         //data.sqlResult.forEach(function (row) {
                             var message_id = row.message_id;
@@ -92,6 +93,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                                                     lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
                                                         // 更新line_message_send的actual_send_time
                                                         request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
+                                                        updateActualSendTimeId += message_id + ",";
                                                     }).catch(function (error) {
                                                         console.log(error);
                                                     });
@@ -110,6 +112,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                                     lineBotSdk.multicast(ids, messageSend).then(function () {
                                         // 更新line_message_send的actual_send_time
                                         request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
+                                        updateActualSendTimeId += message_id + ",";
                                     }).catch(function (error) {
                                         console.log(error);
                                     });
@@ -119,6 +122,9 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                                 return console.log(e);
                             }
                         });
+                        // 更新line_message_send的actual_send_time
+                        console.log('updateActualSendTimeId:' + updateActualSendTimeId);
+                        //request.requestHttpsPut(url + '/actualSendTimeTest/'+ updateActualSendTimeId, '', 21880);
                     }
                 }
                 catch (e) {
