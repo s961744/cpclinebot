@@ -60,7 +60,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
 });
 
 function getMessageToSend (url) {
-    let promises = [];
+    
     //return new Promise(function(resolve, reject){
         // 取得line_message_send中的待發訊息
         request.requestHttpsGet(url + '/getMessageToSend', 21880).then(function (data) {
@@ -70,6 +70,7 @@ function getMessageToSend (url) {
                     var jdata = JSON.parse(data);
                     if (jdata.sqlResult != null)
                     {
+                        let promises = [];
                         var updateActualSendTimeId = "";
                         for (var i =0; i < jdata.sqlResult.length; i++) {
                         //jdata.sqlResult.forEach(function (row) {
@@ -147,7 +148,8 @@ function getMessageToSend (url) {
                             }
                         }
                         //});
-                        
+                        console.log('promises:' + promises);
+                        return Promise.all(promises);
                     }
                 }
                 catch (e) {
@@ -161,7 +163,7 @@ function getMessageToSend (url) {
                 //console.log('No messages need to be sent.');
             }
         });
-    return Promise.all(promises);
+    
     //});
 }
 
