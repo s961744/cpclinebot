@@ -6,7 +6,8 @@ const
     schedule = require('node-schedule'),
     msg = require('./js/msg'),
     postback = require('./js/postback'),
-    request = require('./js/request');
+    request = require('./js/request'),
+	bodyParser = require('body-parser');
 
 // create LINE SDK config from env variables
 const config = {
@@ -16,13 +17,21 @@ const config = {
 
 const app = express();
 
-// create LINE SDK client
-const client = new line.Client(config);
+// recieve msg API
+app.post('/', line.middleware(config), (req, res) => {
+    console.log(req.body.events);
+    Promise
+      .all(req.body.events.map(handleEvent))
+      .then((result) => res.json(result))
+      .catch((err) => {
+        console.error(err);
+        res.status(500).end();
+      });
+  });
 
-// 維持Heroku不Sleep
+// keep Heroku not sleep
 setInterval(function () {
-    request.requestHttpGet("http://cpclinebot.herokuapp.com");
-    lineBotSdk.pushMessage(process.env.AdminLineUserId, { type: 'text', text: 'App alive' });
+    http.get('http://cpclinebot.herokuapp.com');
 }, 1500000); // every 25 minutes (1500000)
 
 app.post('/', line.middleware(config), (req, res) => {
@@ -46,93 +55,6 @@ var server = app.listen(process.env.PORT || 8080, function () {
     console.log("App now running on port", port);
 });
 
-// 排程 1次/10sec
-var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
-    // 取得外部Node-RED主機入口網址
-    request.getUrlFromJsonFile('node-RED30').then(function (url) {
-        // 取得line_message_send中的待發訊息
-        request.requestHttpsGet(url + '/getMessageToSend', 21880).then(function (data) {
-            if (data.length > 0) {
-                console.log(JSON.stringify(data));
-                try {
-                    var jdata = JSON.parse(data);
-                    if (jdata.sqlResult != null)
-                    {
-                        //for (var i =0; i < jdata.sqlResult.length; i++) {
-                        jdata.sqlResult.forEach(function (row) {
-                            var message_id = row.message_id;
-                            var line_id = row.line_id;
-                            var message = row.message;
-                            try {
-                                // 將發送對象拆解
-                                var messageSend = JSON.parse(jsonEscape(message));
-                                var ids = line_id.split(',');
-                                //console.log('message_id:' + message_id + ',ids:' + ids);
-                                // 群組訊息
-                                if (ids[0].startsWith('C'))
-                                {
-                                    lineBotSdk.getGroupMemberIds(ids[0]).then((memberIds) => {
-                                        //console.log('memberIds:' + memberIds);
-                                        //request.requestHttpsPost(url + '/checkUserInGroup/' + ids[0], memberIds.join(), 21880).then(function (result) {
-                                            //console.log('checkUserInGroup result:' + result);
-                                            //var checkUserInGroupResult = JSON.parse(result);
-                                            //if (checkUserInGroupResult.noPermission.length > 0)
-                                            //{
-                                            //    lineBotSdk.pushMessage(ids[0], { type: 'text', text: '訊息發送失敗\n因有' + checkUserInGroupResult.noPermission.length +
-                                            //        '位人員不在權限名單中\n本訊息將延後十分鐘發送，請群組管理員儘快處理' }).then(function () {
-                                            //        // 延後訊息的發送時間
-                                            //        request.requestHttpsPut(url + '/extendSendTime/' + message_id, '', 21880);
-                                            //    }).catch(function (error) {
-                                            //        console.log(error);
-                                            //   });
-                                            //}
-                                            //else
-                                            //{
-                                                lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                                                    // 更新line_message_send的actual_send_time
-                                                    //request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
-                                                }).catch(function (error) {
-                                                    console.log(error);
-                                                });
-                                            //}
-                                        //});
-                                    }).catch((err) => {
-                                        console.log(err);
-                                    });
-                                }
-                                //個人訊息
-                                else
-                                {
-                                    lineBotSdk.multicast(ids, messageSend).then(function () {
-                                        // 更新line_message_send的actual_send_time
-                                        //request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
-                                    }).catch(function (error) {
-                                        console.log(error);
-                                    });
-                                }
-                            }
-                            catch (e) {
-                                return console.log(e);
-                            }
-                        });
-                        // 更新line_message_send的actual_send_time
-                        //request.requestHttpsPut(url + '/actualSendTimeTest/'+ updateActualSendTimeId, '', 21880);
-                    }
-                }
-                catch (e) {
-                    return console.log(e);
-                }
-            }
-            else {
-                //console.log('No messages need to be sent.');
-            }
-        });
-    }).catch(function(e) {
-        return console.log('line_message_send request get fail:' + e);
-    });
-});
-
-
 // event handler
 function handleEvent(event) {
     switch (event.type) {
@@ -152,6 +74,107 @@ function handleEvent(event) {
             return Promise.resolve(null);
     }
 }
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+
+// send msg API
+app.post('/sendMsg', (req, res) => {
+    //console.log(req.body);
+    var sendMsgResult = { "ResultMsg":"", "SuccessMsg":[], "FailMsg":[] };
+    if (req.body.msgData.length > 0) {
+        try {
+            if (req.body.msgData != null)
+            {
+                let promises = req.body.msgData.map(function (msg) {
+                    return new Promise((resolve) => {
+                        sendMsg(msg, resolve);
+                      });
+                });
+                Promise.all(promises).then((result) => {
+                    result.forEach(function(res) {
+                        if (res.send)
+                        {
+                            sendMsgResult.SuccessMsg.push(res.message_id);
+                        }
+                        else
+                        {
+                            sendMsgResult.FailMsg.push(res.message_id);
+                        }
+                    });
+                    sendMsgResult.ResultMsg = "Send message Done";
+                    res.send(sendMsgResult);
+                });
+            }
+            else
+            {
+                sendMsgResult.ResultMsg = "No Message need to send";
+                res.send(sendMsgResult);
+            }
+        }
+        catch (e) {
+            sendMsgResult.ResultMsg = e;
+            console.log(e);
+            res.send(sendMsgResult);
+        }
+    }
+    else {
+        sendMsgResult.ResultMsg = "Message data error";
+        console.log("Message data error");
+        res.send(sendMsgResult);
+    }
+});
+
+function sendMsg (msg, callback) {
+    var result = { "message_id" : msg.message_id };
+    var line_id = msg.line_id;
+    var message;
+    try {
+        message = JSON.parse(msg.message);
+    } 
+    catch (e) {
+        message = msg.message;
+    }
+    //console.log(message_id);
+    //console.log(line_id);
+    //console.log(message);
+    try {
+        // 訊息內容換行處理
+        var messageSend = JSON.parse(jsonEscape(JSON.stringify(message)));
+        // 將發送對象拆解
+        var ids = line_id.split(',');
+        //console.log('message_id:' + message_id + ',ids:' + ids);
+        // 群組訊息
+        if (ids[0].startsWith('C'))
+        {
+            lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
+                result.send = true;
+                return callback(result);
+            }).catch(function (e) {
+                console.log(e);
+                result.send = false;
+                return callback(result);
+            });
+        }
+        // 個人訊息
+        else
+        {
+            lineBotSdk.multicast(ids, messageSend).then(function () {
+                result.send = true;
+                return callback(result);
+            }).catch(function (e) {
+                console.log(e);
+                result.send = false;
+                return callback(result);
+            });
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+  }
 
 // follow event
 function follow(event) {
