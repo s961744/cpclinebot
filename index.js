@@ -31,7 +31,7 @@ app.post('/', line.middleware(config), (req, res) => {
 
 // keep Heroku not sleep
 setInterval(function () {
-    http.get('http://cpclinebot.herokuapp.com');
+    request.requestHttpGet("http://cpclinebot.herokuapp.com");
 }, 1500000); // every 25 minutes (1500000)
 
 app.post('/', line.middleware(config), (req, res) => {
