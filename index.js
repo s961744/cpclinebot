@@ -137,7 +137,7 @@ function sendMsg (msg, callback) {
     catch (e) {
         message = msg.message;
     }
-    console.log("sending msg id : " + message_id);
+    console.log("sending msg id : " + message_id + ", line_id : " + line_id);
     //console.log(line_id);
     //console.log(message);
     try {
