@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>廠商維修清單</title>
+    <title>印表機維修進度回報</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -22,7 +22,6 @@
 </head>
 
 <body>
-    <!-- <div id="liffAppContent" class="hidden"> -->
     <div id="liffAppContent">
         <!-- ACTION BUTTONS -->
         <div class="buttonGroup">
@@ -91,7 +90,7 @@
             <p id='msg'></p>
         </div>
         <!-- LIFF DATA -->
-        <div id="liffData" class="hidden">
+        <div id="liffData">
             <h2 id="liffDataHeader" class="textLeft">LIFF Data</h2>
             <table>
                 <tr>
@@ -122,8 +121,8 @@
         </div>
         <!-- LOGIN LOGOUT BUTTONS -->
         <div class="buttonGroup" class="hidden">
-            <button id="liffLoginButton">Log in</button>
-            <button id="liffLogoutButton">Log out</button>
+            <button id="liffLoginButton">登入(初次使用時請點選)</button>
+            <button id="liffLogoutButton">登出</button>
         </div>
         <div id="statusMessage" class="hidden">
             <div id="isInClientMessage"></div>
