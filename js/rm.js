@@ -18,12 +18,12 @@ exports.rmHandle = function (event, data) {
         case 'rmSetImage':
             //rmSetImage(richMenuId, rmName);
             //rmSetImage("richmenu-24163dd024d77a49d0d5af8f2e6f76aa","RMenuCPC");
-            rmSetImage("richmenu-21d64716dc44b63cc07382d5f39b838a","printerRepair");
+            rmSetImage("richmenu-cf26c43a0f0f69fb174642675c7dea58","printerRepair");
             break;
         case 'rmLinkToUser':
             //rmLinkToUser(userId, richMenuId);
-            rmLinkToUser("U8a9f7297f896e3c4ca077fc0ed8a6f84", "richmenu-21d64716dc44b63cc07382d5f39b838a");
-            rmLinkToUser("U8b50cf1167fc166b85848ac052649a33", "richmenu-21d64716dc44b63cc07382d5f39b838a");
+            rmLinkToUser("U8a9f7297f896e3c4ca077fc0ed8a6f84", "richmenu-cf26c43a0f0f69fb174642675c7dea58");
+            rmLinkToUser("U8b50cf1167fc166b85848ac052649a33", "richmenu-cf26c43a0f0f69fb174642675c7dea58");
             break;  
         case 'rmGetRichMenuIdOfUser':
             rmGetRichMenuIdOfUser(event.source.userId);
@@ -38,11 +38,11 @@ function rmCreate(event, rmName) {
             //console.log("rm=" + rm);
             lineBotSdk.createRichMenu(rm).then(function (richMenuID) {
                 console.log('Rich Menu created:' + JSON.stringify(richMenuID));
-                lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: 'Create RichMenu success:' + richMenuID });
+                lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: 'Create RichMenu success: ' + richMenuID });
                 resolve(richMenuID);
             }).catch(function (e) {
                 console.log('createRichMenu error:' + e);
-                lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: 'Create RichMenu fail:' + e});
+                lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: 'Create RichMenu fail: ' + e});
                 reject(e);
             });
         });
@@ -70,16 +70,16 @@ function rmSetImage (richMenuId, rmName) {
 function rmLinkToUser (userId, richMenuId) {
     return new Promise(function (resolve, reject) {
         lineBotSdk.linkRichMenuToUser(userId, richMenuId).then(function () {
-            console.log('linkRichMenuToUser seccess');
+            console.log('linkRichMenuToUser: ' + userId + ' success');
             lineBotSdk.getRichMenuIdOfUser(userId).then(function (richMenuId) {
                 console.log(userId + '.RichMenuID=' + richMenuId);
                 resolve(richMenuId);
             }).catch(function (e) {
-                console.log('getRichMenuIdOfUser(' + userId + ')error:' + e);
+                console.log('getRichMenuIdOfUser: ' + userId + ' error:' + e);
                 reject(e);
             });
         }).catch(function (e) {
-            console.log('linkRichMenuToUser(' + userId + ')error:' + e);
+            console.log('linkRichMenuToUser: ' + userId + ' error:' + e);
             reject(e);
         });
     });

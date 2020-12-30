@@ -84,7 +84,7 @@ exports.createRichMenu = function (rm) {
 //綁定rmName.png圖片給richMenuId
 exports.setRichMenuImage = function (richMenuId, buffer) {
     return new Promise(function (resolve, reject) {
-        console.log('setRichMenuImage start: richMenuId=' + richMenuId);
+        //console.log('setRichMenuImage start: richMenuId=' + richMenuId);
         client.setRichMenuImage(richMenuId, buffer).then(function () {
             resolve(200);
         });
