@@ -60,7 +60,7 @@
               {
                 "type": "postback",
                 "label": "建立RichMenu",
-                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmCreate\",\"rm\":\"rmCenter\"}"
+                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmCreate\",\"rm\":\"rmNamRepair\"}"
               },
               {
                 "type": "postback",
