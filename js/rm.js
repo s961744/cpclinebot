@@ -3,7 +3,8 @@
 const
     lineBotSdk = require('./lineBotSdk'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    jsonProcess = require('./jsonProcess');
 
 //richMenu功能處理
 exports.rmHandle = function (event, data) {
