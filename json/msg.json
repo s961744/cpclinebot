@@ -68,10 +68,31 @@
                 "data": "{\"responseType\":\"rm\",\"rmName\":\"rmGetList\"}"
               },
               {
-                "type": "datetimepicker",
-                "label": "開發中",
-                "data": "datestring",
-                "mode": "date"
+                "type": "postback",
+                "label": "綁定RichMenu給所有人員",
+                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmLinkAll\"}"
+              }
+            ]
+          },
+          {
+            "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/difficult.png",
+            "title": "管理員選單4",
+            "text": "RichMenu管理",
+            "actions": [
+              {
+                "type": "postback",
+                "label": "取得RichMenuId",
+                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmGetRichMenuIdOfUser\"}"
+              },
+              {
+                "type": "postback",
+                "label": "設定RichMenu圖片",
+                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmSetImage\"}"
+              },
+              {
+                "type": "postback",
+                "label": "綁定RichMenu給所有人員",
+                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmLinkAll\"}"
               }
             ]
           }
@@ -99,8 +120,36 @@
     "msgName": "rmAttendance",
     "msgType": "rm",
     "msg": {
-      "type": "text",
-      "text": "出勤管理"
+      "type": "template",
+      "altText": "部門管理選單",
+      "template": {
+        "type": "buttons",
+        "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/msgCenter.png",
+        "title": "部門管理選單",
+        "text": "請選擇",
+        "actions": [
+          {
+            "type": "uri",
+            "label": "當班出勤名單查詢",
+            "uri": "line://app/1526104413-827QnRa7"
+          },
+          {
+            "type": "postback",
+            "label": "開發中",
+            "data": "testing"
+          },
+          {
+            "type": "postback",
+            "label": "開發中",
+            "data": "testing"
+          },
+          {
+            "type": "postback",
+            "label": "開發中",
+            "data": "testing"
+          }
+        ]
+      }
     }
   },
   {

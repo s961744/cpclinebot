@@ -224,5 +224,56 @@
         }
       ]
     }
+  },
+  {
+    "rmName": "rmNamRepair",
+    "rm": {
+      "name": "rmNamRepair",
+      "size": {
+        "width": 2500,
+        "height": 843
+      },
+      "selected": false,
+      "chatBarText": "網管廠商叫修回報系統",
+      "areas": [
+        {
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "uri",
+            "label": "印表機維修進度回報",
+            "uri":"https://cpclinebot.herokuapp.com/"
+          }
+        },
+        {
+          "bounds": {
+            "x": 834,
+            "y": 0,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "postback",
+            "data": "action=test2"
+          }
+        },
+        {
+          "bounds": {
+            "x": 1668,
+            "y": 0,
+            "width": 833,
+            "height": 843
+          },
+          "action": {
+            "type": "postback",
+            "data": "action=test3"
+          }
+        }
+      ]
+    }
   }
 ]
