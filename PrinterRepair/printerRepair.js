@@ -387,6 +387,8 @@ async function setDetail($element) {
                 //隱藏失敗訊息
                 $('#reportFail').hide();
                 //$("#detail").modal('hide');
+            }).catch(err => {
+                alert(err);
             });
         }
         else
