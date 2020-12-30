@@ -1,0 +1,82 @@
+table {
+    width: 100%;
+    table-layout: fixed;
+    word-break: break-all;
+}
+
+div {
+    max-width: 100%;
+    text-align: center;
+}
+
+.table th {
+    text-align: center;
+}
+
+.table > tbody > tr > td
+{
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+table, th, td {
+    font-size: 15px;
+    border: 1px solid black;
+}
+
+img { 
+    max-width: 25%; 
+    height: auto; 
+}
+
+button {
+    margin: 4px;
+    width: 100%;
+    height: 100%;
+}
+
+#code-block {
+    background-color: #eee;
+    border: 1px solid #999;
+    display: block;
+    padding: 20px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#profilePictureDiv {
+    text-align: center;
+}
+
+#profileImageDiv {
+    height: 100px;
+    width: 100px;
+}
+
+#statusMessage {
+    position: relative;
+    top: 40px;
+}
+
+.textLeft {
+    text-align: left;
+}
+
+.buttonGroup {
+    padding-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal-title {
+    text-align:center;
+}
+
+#excelDataTable > tbody > tr > th{
+    width:20%
+}

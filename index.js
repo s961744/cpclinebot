@@ -3,11 +3,11 @@ const
     line = require('@line/bot-sdk'),
     lineBotSdk = require('./js/lineBotSdk'),
     express = require('express'),
-    schedule = require('node-schedule'),
     msg = require('./js/msg'),
     postback = require('./js/postback'),
     request = require('./js/request'),
-	bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    const cors = require('cors');
 
 // create LINE SDK config from env variables
 const config = {
@@ -16,6 +16,9 @@ const config = {
 };
 
 const app = express();
+
+app.use(cors())
+app.use(express.static('PrinterRepair'));
 
 // recieve msg API
 app.post('/', line.middleware(config), (req, res) => {
