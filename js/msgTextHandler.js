@@ -5,7 +5,7 @@ const
     msg = require('./msg'),
     jsonProcess = require('./jsonProcess'),
     request = require('./request'),
-    rm = require('./rm'),;
+    rm = require('./rm');
 
 exports.msgTextHandle = function (event) {
     //推播權限申請驗證
