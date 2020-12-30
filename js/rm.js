@@ -14,6 +14,14 @@ exports.rmHandle = function (event, data) {
         case 'rmGetList':
             rmGetList(event);
             break;
+        case 'rmSetImage':
+            //rmSetImage("richmenu-24163dd024d77a49d0d5af8f2e6f76aa","RMenuCPC");
+            //rmSetImage(richMenuId, rmName)
+            rmSetImage("richmenu-24163dd024d77a49d0d5af8f2e6f76aa","printerRepair");
+            break;
+        case 'rmGetRichMenuIdOfUser':
+            rmGetRichMenuIdOfUser(event.source.userId);
+            break;
     }
 }
 
@@ -21,6 +29,7 @@ exports.rmHandle = function (event, data) {
 function rmCreate(rmName) {
     return new Promise(function (resolve, reject) {
         getRichMenuData(rmName).then(function (rm) {
+            console.log("rm=" + rm);
             lineBotSdk.createRichMenu(rm).then(function (richMenuID) {
                 console.log('Rich Menu created:' + JSON.stringify(richMenuID));
                 resolve(richMenuID);
@@ -61,6 +70,19 @@ function rmLinkToUser (userId, richMenuId) {
             });
         }).catch(function (e) {
             console.log('linkRichMenuToUser(' + userId + ')error:' + e);
+            reject(e);
+        });
+    });
+}
+
+//取得UserId的richMenuId
+function rmGetRichMenuIdOfUser(userId) {
+    return new Promise(function (resolve, reject) {
+        lineBotSdk.getRichMenuIdOfUser(userId).then(function (richMenuId) {
+            console.log(userId + '.RichMenuID=' + richMenuId);
+            resolve(richMenuId);
+        }).catch(function (e) {
+            console.log('getRichMenuIdOfUser(' + userId + ')error:' + e);
             reject(e);
         });
     });

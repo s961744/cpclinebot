@@ -4,7 +4,8 @@ const
     lineBotSdk = require('./lineBotSdk'),
     msg = require('./msg'),
     jsonProcess = require('./jsonProcess'),
-    request = require('./request');
+    request = require('./request'),
+    rm = require('./rm'),;
 
 exports.msgTextHandle = function (event) {
     //推播權限申請驗證
@@ -72,23 +73,23 @@ exports.msgTextHandle = function (event) {
         });
     }
     else if (event.message.text.toUpperCase().startsWith('RM') && event.source.userId == process.env.AdminLineUserId) {
-        //if (event.message.text.toUpperCase().startsWith('RM_DESC')) {
-        //    var msg = { type: 'text', text: '歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409' };
-        //    client.replyMessage(event.replyToken, msg);
-        //}
-        // 建立RichMenu
-        //else if (event.message.text.toUpperCase().startsWith('RM_CR')) {
-        //    var rmName = event.message.text.substring(6);
-        //    rm.createRichMenu(rmName).then((richMenuID) => {
-        //        rm.setRichMenuImage(richMenuID).then((richMenuID) => {
-        //            rm.linkRichMenuToUser(process.env.AdminLineUserId, richMenuID);
-        //        }).catch((err) => {
-        //            console.log(err);
-        //        });
-        //    }).catch((err) => {
-        //        console.log(err);
-        //    });
-        //}
+        if (event.message.text.toUpperCase().startsWith('RM_DESC')) {
+           var msg = { type: 'text', text: '歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409' };
+           client.replyMessage(event.replyToken, msg);
+        }
+        //建立RichMenu
+        else if (event.message.text.toUpperCase().startsWith('RM_CR')) {
+           var rmName = event.message.text.substring(6);
+           rm.createRichMenu(rmName).then((richMenuID) => {
+               rm.rmSetImage(richMenuID).then((richMenuID) => {
+                   rm.linkRichMenuToUser(process.env.AdminLineUserId, richMenuID);
+               }).catch((err) => {
+                   console.log(err);
+               });
+           }).catch((err) => {
+               console.log(err);
+           });
+        }
     }
     //系統管理員選單
     else if (event.message.text === 'adminMenu') {
