@@ -50,11 +50,11 @@ exports.msgTextHandle = function (event) {
             lineBotSdk.replyMessage(event.replyToken, msgData).then(function () {
                 lineBotSdk.getDisplayName(event.source.userId).then(function (displayName) {
                     //發送驗證資訊給管理員
-                    var msg = {
+                    var sendMsg = {
                         type: 'text', text: '*****LINE群組權限申請*****\nLine暱稱：' + displayName + '\n驗證碼：'
                         + event.message.text + '\nUId：' + event.source.userId + '\nGId：' + event.source.groupId
                     };
-                    lineBotSdk.pushMessage(process.env.AdminLineUserId, msg);
+                    lineBotSdk.pushMessage(process.env.AdminLineUserId, sendMsg);
                     //將groupId及verifyCode寫入line_group_auth
                     var info = { groupId: event.source.groupId, verifyCode: event.message.text };
                     var postData = JSON.stringify(info);
@@ -74,8 +74,8 @@ exports.msgTextHandle = function (event) {
     }
     else if (event.message.text.toUpperCase().startsWith('RM') && event.source.userId == process.env.AdminLineUserId) {
         if (event.message.text.toUpperCase().startsWith('RM_DESC')) {
-           var msg = { type: 'text', text: '歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409' };
-           client.replyMessage(event.replyToken, msg);
+           var sendMsg = { type: 'text', text: '歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409' };
+           client.replyMessage(event.replyToken, sendMsg);
         }
         //建立RichMenu
         else if (event.message.text.toUpperCase().startsWith('RM_CR')) {
