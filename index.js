@@ -7,7 +7,7 @@ const
     postback = require('./js/postback'),
     request = require('./js/request'),
     bodyParser = require('body-parser'),
-    const cors = require('cors');
+    cors = require('cors');
 
 // create LINE SDK config from env variables
 const config = {
