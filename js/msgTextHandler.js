@@ -3,7 +3,6 @@
 const
     lineBotSdk = require('./lineBotSdk'),
     msg = require('./msg'),
-    jsonProcess = require('./jsonProcess'),
     request = require('./request'),
     rm = require('./rm');
 

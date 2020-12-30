@@ -10,16 +10,21 @@ const
 exports.rmHandle = function (event, data) {
     switch (data.rmName) {
         case 'rmCreate':
-            rmCreate(data.rm);
+            rmCreate(event, data.rm);
             break;
         case 'rmGetList':
             rmGetList(event);
             break;
         case 'rmSetImage':
+            //rmSetImage(richMenuId, rmName);
             //rmSetImage("richmenu-24163dd024d77a49d0d5af8f2e6f76aa","RMenuCPC");
-            //rmSetImage(richMenuId, rmName)
-            rmSetImage("richmenu-24163dd024d77a49d0d5af8f2e6f76aa","printerRepair");
+            rmSetImage("richmenu-21d64716dc44b63cc07382d5f39b838a","printerRepair");
             break;
+        case 'rmLinkToUser':
+            //rmLinkToUser(userId, richMenuId);
+            rmLinkToUser("U8a9f7297f896e3c4ca077fc0ed8a6f84", richMenuId);
+            rmLinkToUser("U8b50cf1167fc166b85848ac052649a33", richMenuId);
+            break;  
         case 'rmGetRichMenuIdOfUser':
             rmGetRichMenuIdOfUser(event.source.userId);
             break;
@@ -27,15 +32,17 @@ exports.rmHandle = function (event, data) {
 }
 
 //建立richMenu
-function rmCreate(rmName) {
+function rmCreate(event, rmName) {
     return new Promise(function (resolve, reject) {
         getRichMenuData(rmName).then(function (rm) {
-            console.log("rm=" + rm);
+            //console.log("rm=" + rm);
             lineBotSdk.createRichMenu(rm).then(function (richMenuID) {
                 console.log('Rich Menu created:' + JSON.stringify(richMenuID));
+                lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: 'Create RichMenu success:' + richMenuID });
                 resolve(richMenuID);
             }).catch(function (e) {
                 console.log('createRichMenu error:' + e);
+                lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: 'Create RichMenu fail:' + e});
                 reject(e);
             });
         });
