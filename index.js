@@ -7,7 +7,8 @@ const
     postback = require('./js/postback'),
     request = require('./js/request'),
     bodyParser = require('body-parser'),
-    cors = require('cors');
+    cors = require('cors'),
+    myLiffId = process.env.MY_LIFF_ID;;
 
 // create LINE SDK config from env variables
 const config = {
@@ -19,6 +20,10 @@ const app = express();
 
 app.use(cors())
 app.use(express.static('PrinterRepair'));
+
+app.get('/send-id', function(req, res) {
+    res.json({id: myLiffId});
+});
 
 // recieve msg API
 app.post('/', line.middleware(config), (req, res) => {
