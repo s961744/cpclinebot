@@ -52,6 +52,7 @@ function rmCreate(event, rmName) {
 //綁定rmName.png圖片給richMenuId
 function rmSetImage (richMenuId, rmName) {
     return new Promise(function (resolve, reject) {
+        console.log('setRichMenuImage start: richMenuId=' + richMenuId + ',rmName=' + rmName);
         const filepath = path.join('img', rmName + '.png');
         const buffer = fs.readFileSync(filepath);
         lineBotSdk.setRichMenuImage(richMenuId, buffer).then(function () {
