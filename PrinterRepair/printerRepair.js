@@ -383,6 +383,7 @@ async function setDetail($element) {
                 rowData.pk_key = Math.floor(dateTime / 1000);
                 //回寫資料，顯示成功訊息
                 report($element["doc_nbr"], rowData)
+                
                 $('#reportSuccess').show();
                 //隱藏失敗訊息
                 $('#reportFail').hide();
@@ -413,7 +414,17 @@ async function report(doc_nbr, rowData) {
     })
     var putNamManLog = await putNamManLogResponse.json()
     console.log(putNamManLog)
-    return putNamManLog;
+    if (rowData.repair_status == "OK")
+    {
+        var putNamManDResponse = await fetch('https://iot.chinpoon.com:21880/putNamManD/' + doc_nbr, {
+        method: 'PUT', // or 'PUT'
+        body: JSON.stringify(rowData), // data can be `string` or {object}!
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    })
+    }
+    //return putNamManLog;
 }
   
 
