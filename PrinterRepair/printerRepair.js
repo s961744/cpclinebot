@@ -298,7 +298,7 @@ async function setDetail($element) {
     rowData.doc_date = rowData.doc_date[0]
     rowData.doc_nbr = rowData.doc_nbr[0]
     rowData.repair_reason = setRepairReasonText(lastNamManLog.result.Table[0]["repair_reason"])
-    rowData.l_remark250 = lastNamManLog.result.Table[0][key]["l_remark250"]
+    rowData.l_remark250 = lastNamManLog.result.Table[0]["l_remark250"]
     rowData.mst_no = rowData.mst_no[0]
     rowData.location = rowData.location[0]
     rowData.doc_head_status = rowData.doc_head_status[0]
