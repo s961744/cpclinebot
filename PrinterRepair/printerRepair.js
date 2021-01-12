@@ -295,6 +295,14 @@ async function setDetail($element) {
     var repairReasonResponse = await fetch('https://iot.chinpoon.com:21880/getAllRepairReason')
     var repairReason = await repairReasonResponse.json()
     var rowData = $element
+    rowData.doc_date = rowData.doc_date[0]
+    rowData.doc_nbr = rowData.doc_nbr[0]
+    rowData.repair_reason = setRepairReasonText(lastNamManLog.result.Table[0]["repair_reason"])
+    rowData.l_remark250 = lastNamManLog.result.Table[0][key]["l_remark250"]
+    rowData.mst_no = rowData.mst_no[0]
+    rowData.location = rowData.location[0]
+    rowData.doc_head_status = rowData.doc_head_status[0]
+    rowData.kind = rowData.kind[0]
     var body$ = $('<tbody/>')
     Object.keys(lastNamManLog.result.Table[0]).forEach(function (key) {
         var tr$ = $('<tr/>')
@@ -421,8 +429,10 @@ async function report(doc_nbr, rowData) {
         body: JSON.stringify(rowData), // data can be `string` or {object}!
         headers: new Headers({
             'Content-Type': 'application/json'
+            })
         })
-    })
+        var putNamManD = await putNamManDResponse.json()
+        console.log(putNamManD)
     }
     //return putNamManLog;
 }
