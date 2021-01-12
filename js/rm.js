@@ -18,12 +18,12 @@ exports.rmHandle = function (event, data) {
         case 'rmSetImage':
             //rmSetImage(richMenuId, rmName);
             //rmSetImage("richmenu-24163dd024d77a49d0d5af8f2e6f76aa","RMenuCPC");
-            rmSetImage("richmenu-cf26c43a0f0f69fb174642675c7dea58","printerRepair");
+            rmSetImage("richmenu-cc73bfa3179fc4d9e8f310eaf6e5b80b","printerRepair");
             break;
         case 'rmLinkToUser':
             //rmLinkToUser(userId, richMenuId);
-            rmLinkToUser("U8a9f7297f896e3c4ca077fc0ed8a6f84", "richmenu-cf26c43a0f0f69fb174642675c7dea58");
-            rmLinkToUser("U8b50cf1167fc166b85848ac052649a33", "richmenu-cf26c43a0f0f69fb174642675c7dea58");
+            rmLinkToUser("U8a9f7297f896e3c4ca077fc0ed8a6f84", "richmenu-cc73bfa3179fc4d9e8f310eaf6e5b80b");
+            rmLinkToUser("U8b50cf1167fc166b85848ac052649a33", "richmenu-cc73bfa3179fc4d9e8f310eaf6e5b80b");
             break;  
         case 'rmGetRichMenuIdOfUser':
             rmGetRichMenuIdOfUser(event.source.userId);
