@@ -268,7 +268,7 @@ function toggleElement(elementId) {
 async function getList() {
     //liff.getProfile().then(function (profile) {
         //var listResponse = await fetch('https://iot.chinpoon.com:21880/getNamManM/' + profile.userId)
-        var listResponse = await fetch('https://iot.chinpoon.com:21880/getNamManM/1245')
+        var listResponse = await fetch('https://iot.chinpoon.com:21880/getNamManM/Uc1799d2d8c33baa009b7ac9c2ae22afd')
         var list = await listResponse.json()
         var $table = $('#table')
         $table.bootstrapTable({ 
@@ -385,7 +385,7 @@ async function setDetail($element) {
         && document.getElementById('btnRepairStatus').textContent != "請選擇")
         {
             liff.getProfile().then(function (profile) {
-                rowData.creator = 'LINE'
+                rowData.creator = '1245'
                 rowData.line_name = profile.displayName;
                 var dateTime = Date.now();
                 rowData.pk_key = Math.floor(dateTime / 1000);
