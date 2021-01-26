@@ -22,8 +22,9 @@ exports.rmHandle = function (event, data) {
             break;
         case 'rmLinkToUser':
             //rmLinkToUser(userId, richMenuId);
-            rmLinkToUser("U8a9f7297f896e3c4ca077fc0ed8a6f84", "richmenu-cc73bfa3179fc4d9e8f310eaf6e5b80b");
-            rmLinkToUser("U8b50cf1167fc166b85848ac052649a33", "richmenu-cc73bfa3179fc4d9e8f310eaf6e5b80b");
+            //rmLinkToUser("U8a9f7297f896e3c4ca077fc0ed8a6f84", "richmenu-cc73bfa3179fc4d9e8f310eaf6e5b80b");
+            //rmLinkToUser("U8b50cf1167fc166b85848ac052649a33", "richmenu-cc73bfa3179fc4d9e8f310eaf6e5b80b");
+            rmLinkToUser("Uc1799d2d8c33baa009b7ac9c2ae22afd", "richmenu-cc73bfa3179fc4d9e8f310eaf6e5b80b");
             break;  
         case 'rmGetRichMenuIdOfUser':
             rmGetRichMenuIdOfUser(event.source.userId);
