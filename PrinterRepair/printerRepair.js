@@ -448,12 +448,24 @@ function setRepairReasonText(value)
     return "更換紙夾輪"
     else if (value == 'P004')
     return "更換定著"
-    else if (value == 5)
-    return "換上熱"
-    else if (value == 6)
-    return "換bk滾筒"
-    else if (value == 7)
-    return "安裝碳粉夾"
+    else if (value == 'P005')
+    return "更換碳粉匣"
+    else if (value == 'P006')
+    return "更換滾筒組"
+    else if (value == 'P007')
+    return "更換風扇"
+    else if (value == 'P008')
+    return "更換上熱"
+    else if (value == 'P009')
+    return "更換下熱"
+    else if (value == 'P010')
+    return "更換bk滾筒"
+    else if (value == 'P011')
+    return "更換滾筒晶片"
+    else if (value == 'P012')
+    return "清回收盒"
+    else if (value == 'P013')
+    return "零件上油"
     else 
     return "請選擇"
 }
@@ -468,12 +480,24 @@ function setRepairReasonValue(text)
     return 'P003'
     else if (text == "更換定著")
     return 'P004'
-    else if (text == "換上熱")
-    return 5
-    else if (text == "換bk滾筒")
-    return 6
-    else if (text == "安裝碳粉夾")
-    return 7
+    else if (text == "更換碳粉匣")
+    return 'P005'
+    else if (text == "更換滾筒組")
+    return 'P006'
+    else if (text == "更換風扇")
+    return 'P007'
+    else if (text == "更換上熱")
+    return 'P008'
+    else if (text == "更換下熱")
+    return 'P009'
+    else if (text == "更換bk滾筒")
+    return 'P010'
+    else if (text == "更換滾筒晶片")
+    return 'P011'
+    else if (text == "清回收盒")
+    return 'P012'
+    else if (text == "零件上油")
+    return 'P013'
     else 
     return ""
 }
