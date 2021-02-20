@@ -538,6 +538,9 @@ function detailColumnName(key)
 {
     var name;
     switch (key) {
+        case "item_type":
+            name = "型號"
+            break;
         case "remark250":
             name = "問題<br>說明"
             break;
