@@ -538,7 +538,7 @@ function detailColumnName(key)
 {
     var name;
     switch (key) {
-        case "requestor":
+        case "employee_name":
             name = "請修者"
             break;
         case "exten_no":
