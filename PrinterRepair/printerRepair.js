@@ -538,6 +538,12 @@ function detailColumnName(key)
 {
     var name;
     switch (key) {
+        case "requestor":
+            name = "請修者"
+            break;
+        case "exten_no":
+            name = "分機號碼"
+            break;
         case "item_type":
             name = "型號"
             break;
