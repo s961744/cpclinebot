@@ -542,7 +542,7 @@ function detailColumnName(key)
             name = "請修者"
             break;
         case "exten_no":
-            name = "分機號碼"
+            name = "分機"
             break;
         case "item_type":
             name = "型號"
