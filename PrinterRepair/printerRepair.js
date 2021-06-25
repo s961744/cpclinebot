@@ -268,7 +268,7 @@ function toggleElement(elementId) {
 async function getList() {
     //liff.getProfile().then(function (profile) {
         //var listResponse = await fetch('https://iot.chinpoon.com:21880/getNamManM/' + profile.userId)
-        var listResponse = await fetch('https://iot.chinpoon.com:20005/getNamManM/Uc1799d2d8c33baa009b7ac9c2ae22afd')
+        var listResponse = await fetch('https://iot.chinpoon.com:21880/getNamManM/Uc1799d2d8c33baa009b7ac9c2ae22afd')
         var list = await listResponse.json()
         var $table = $('#table')
         $table.bootstrapTable({ 
@@ -290,9 +290,9 @@ async function getList() {
 }
 
 async function setDetail($element) {
-    var lastNamManLogResponse = await fetch('https://iot.chinpoon.com:20005/getLastNamManLog/' + $element["doc_nbr"])
+    var lastNamManLogResponse = await fetch('https://iot.chinpoon.com:21880/getLastNamManLog/' + $element["doc_nbr"])
     var lastNamManLog = await lastNamManLogResponse.json()
-    var repairReasonResponse = await fetch('https://iot.chinpoon.com:20005/getAllRepairReason')
+    var repairReasonResponse = await fetch('https://iot.chinpoon.com:21880/getAllRepairReason')
     var repairReason = await repairReasonResponse.json()
     var rowData = $element
     rowData.doc_date = rowData.doc_date[0]
@@ -413,7 +413,7 @@ async function setDetail($element) {
 }
 
 async function report(doc_nbr, rowData) {
-    var putNamManLogResponse = await fetch('https://iot.chinpoon.com:20005/putNamManLog/' + doc_nbr, {
+    var putNamManLogResponse = await fetch('https://iot.chinpoon.com:21880/putNamManLog/' + doc_nbr, {
         method: 'PUT', // or 'PUT'
         body: JSON.stringify(rowData), // data can be `string` or {object}!
         headers: new Headers({
@@ -424,7 +424,7 @@ async function report(doc_nbr, rowData) {
     console.log(putNamManLog)
     if (rowData.repair_status == "OK")
     {
-        var putNamManDResponse = await fetch('https://iot.chinpoon.com:20005/putNamManD/' + doc_nbr, {
+        var putNamManDResponse = await fetch('https://iot.chinpoon.com:21880/putNamManD/' + doc_nbr, {
         method: 'PUT', // or 'PUT'
         body: JSON.stringify(rowData), // data can be `string` or {object}!
         headers: new Headers({
