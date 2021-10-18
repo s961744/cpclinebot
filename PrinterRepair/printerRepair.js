@@ -268,7 +268,7 @@ function toggleElement(elementId) {
 async function getList() {
     //liff.getProfile().then(function (profile) {
         //var listResponse = await fetch('https://iot.chinpoon.com:21880/getNamManM/' + profile.userId)
-        var listResponse = await fetch('https://iot.chinpoon.com:20005/getNamManM/Uc1799d2d8c33baa009b7ac9c2ae22afd')
+        var listResponse = await fetch('https://iot.chinpoon.com:20005/getNamManM/Ueb599be503de492a0a8eaceb08b10d0d')
         var list = await listResponse.json()
         var $table = $('#table')
         $table.bootstrapTable({ 
