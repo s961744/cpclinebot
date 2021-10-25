@@ -153,7 +153,7 @@ function sendMsg (msg, callback) {
         var messageSend = JSON.parse(jsonEscape(JSON.stringify(message)));
         // 將發送對象拆解
         var ids = line_id.split(',');
-        console.log('message_id:' + message_id + ',ids:' + ids);
+        console.log('message_id:' + msg.message_id + ',ids:' + ids);
         // 群組訊息
         // if (ids[0].startsWith('C'))
         // {
