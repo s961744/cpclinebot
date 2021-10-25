@@ -152,7 +152,7 @@ function sendMsg (msg, callback) {
         // 訊息內容換行處理
         var messageSend = JSON.parse(jsonEscape(JSON.stringify(message)));
         // 將發送對象拆解
-        //var ids = line_id.split(',');
+        var ids = line_id.split(',');
         //console.log('message_id:' + message_id + ',ids:' + ids);
         // 群組訊息
         // if (ids[0].startsWith('C'))
@@ -169,7 +169,7 @@ function sendMsg (msg, callback) {
         // // 個人訊息
         // else
         // {
-            lineBotSdk.multicast(line_id, messageSend).then(function () {
+            lineBotSdk.multicast(ids, messageSend).then(function () {
                 result.send = true;
                 return callback(result);
             }).catch(function (e) {
