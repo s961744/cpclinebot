@@ -155,7 +155,7 @@ function sendMsg (msg, callback) {
         var ids = line_id.split(',');
         console.log('message_id:' + msg.message_id + ',ids:' + ids);
         // 群組訊息
-        if (ids[0].startsWith('C'))
+/*         if (ids[0].startsWith('C'))
         {
             lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
                 result.send = true;
@@ -168,7 +168,7 @@ function sendMsg (msg, callback) {
         }
         // 個人訊息
         else
-        {
+        { */
             lineBotSdk.multicast(ids, messageSend).then(function () {
                 result.send = true;
                 return callback(result);
@@ -177,7 +177,7 @@ function sendMsg (msg, callback) {
                 result.send = false;
                 return callback(result);
             });
-        }
+        //}
     }
     catch (e) {
         console.log(e);
